@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
 import { loginUser, logoutUser } from "../features/auth/authSlice";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,19 +34,19 @@ const Login = () => {
     return isProceed;
   };
 
-  const proceedLogin = (e) => {
+  const proceedLogin = async(e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch("http://localhost:8080/user")
-        .then((res) => res.json())
+      await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/login", {
+        email,
+        password
+      })
         .then((res) => {
-          let data = res;
-          const foundUser = data.filter(
-            (item) => item.email === email && item.password === password
-          );
-          if (foundUser[0]) {
+          let data = res.data.user;
+          console.log(data);
+          if (data.email === email ) {
             toast.success("Login successful");
-            localStorage.setItem("id", foundUser[0].id);
+            localStorage.setItem("id", data._id);
             store.dispatch(loginUser());
             navigate("/");
           } else {

@@ -3,15 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { SectionTitle } from "../components";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setName] = useState("");
+  const [lastName, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAdress] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,10 +20,10 @@ const Register = () => {
     let isProceed = true;
     let errorMessage = "";
 
-    if (name.length === 0) {
+    if (firstName.length === 0) {
       isProceed = false;
       errorMessage = "Please enter the value in username field";
-    } else if (lastname.length === 0) {
+    } else if (lastName.length === 0) {
       isProceed = false;
       errorMessage = "Please enter the value in lastname field";
     } else if (email.length === 0) {
@@ -31,7 +32,7 @@ const Register = () => {
     } else if (phone.length < 4) {
       isProceed = false;
       errorMessage = "Phone must be longer than 3 characters";
-    } else if (adress.length < 4) {
+    } else if (address.length < 4) {
       isProceed = false;
       errorMessage = "Adress must be longer than 3 characters";
     } else if (password.length < 6) {
@@ -52,25 +53,28 @@ const Register = () => {
     return isProceed;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     let regObj = {
-      id: nanoid(),
-      name,
-      lastname,
+      // id: nanoid(),
+      firstName,
+      lastName,
       email,
       phone,
-      adress,
+      address,
       password,
-      userWishlist: [],
+      // userWishlist: [],
     };
 
     if (isValidate()) {
-      fetch("http://localhost:8080/user", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(regObj),
+      await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        password
       })
         .then((res) => {
           toast.success("Registration Successful");
@@ -94,7 +98,7 @@ const Register = () => {
               <input
                 type="text"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                value={name}
+                value={firstName}
                 onChange={(e) => setName(e.target.value)}
                 required={true}
               />
@@ -104,7 +108,7 @@ const Register = () => {
               <input
                 type="text"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                value={lastname}
+                value={lastName}
                 onChange={(e) => setLastname(e.target.value)}
                 required={true}
               />
@@ -129,12 +133,12 @@ const Register = () => {
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">
-                Adress
+                Address
               </label>
               <input
                 type="text"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                value={adress}
+                value={address}
                 onChange={(e) => setAdress(e.target.value)}
                 required={true}
               />

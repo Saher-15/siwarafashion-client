@@ -1,15 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   QuantityInput,
   SectionTitle,
   SelectSize,
-  SingleProductRating,
-  SingleProductReviews,
 } from "../components";
 import { FaHeart } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
-
 import { Link, useLoaderData } from "react-router-dom";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
@@ -24,9 +21,7 @@ import { store } from "../store";
 
 export const singleProductLoader = async ({ params }) => {
   const { id } = params;
-
-  const response = await axios(`http://localhost:8080/products/${id}`);
-
+  const response = await axios(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getProduct/${id}`);
   return { productData: response.data };
 };
 
@@ -38,80 +33,77 @@ const SingleProduct = () => {
   const { userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
-  const [rating, setRating] = useState([
-    "empty star",
-    "empty star",
-    "empty star",
-    "empty star",
-    "empty star",
-  ]);
-
   const { productData } = useLoaderData();
 
-  const product = {
-    id: productData?.id + size,
-    title: productData?.name,
-    image: productData?.imageUrl,
-    rating: productData?.rating,
-    price: productData?.price?.current?.value,
-    amount: quantity,
-    selectedSize: size || productData?.availableSizes[0],
-    isInWishList:
-      wishItems.find((item) => item.id === productData?.id + size) !==
-      undefined,
-  };
+  useEffect(() => {
+    // Check if the product is in the wishlist when component mounts
+    isProductInWishlist();
+  }, []);
 
-  for (let i = 0; i < productData?.rating; i++) {
-    rating[i] = "full star";
-  }
-
-  const addToWishlistHandler = async (product) => {
+  async function isProductInWishlist() {
     try {
       const getResponse = await axios.get(
-        `http://localhost:8080/user/${localStorage.getItem("id")}`
+        `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/get_wishlist/${localStorage.getItem("id")}`
       );
-      const userObj = getResponse.data;
+      const data = getResponse.data;
+      console.log(getResponse);
+      
+      // Check if the product is in the wishlist
+      const isInWishlist = data.findIndex((item) => item.id === productData?._id) !== -1;
+      setProduct({
+        ...product,
+        isInWishList: isInWishlist
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  const [product, setProduct] = useState({
+    id: productData?._id,
+    name: productData?.name,
+    imageUrl: productData?.imageUrl,
+    price: productData?.price,
+    selectedSize: size || productData?.availableSizes[0],
+    isInWishList: false
+  });
 
-      userObj.userWishlist = userObj.userWishlist || [];
-
-      userObj.userWishlist.push(product);
-
-      const postResponse = await axios.put(
-        `http://localhost:8080/user/${localStorage.getItem("id")}`,
-        userObj
-      );
-
-
-      store.dispatch(updateWishlist({ userObj }));
-      toast.success("Product added to the wishlist!");
+  const addToWishlistHandler = async () => {
+    try {
+      // If product is not in wishlist, add it
+      if (!product.isInWishList) {
+        const response = await axios.patch(
+          `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/add_to_wishlist/${localStorage.getItem("id")}`,
+          product
+        );
+        toast.success("Product added to the wishlist!");
+        setProduct({
+          ...product,
+          isInWishList: true
+        });
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const removeFromWishlistHandler = async (product) => {
-    const getResponse = await axios.get(
-      `http://localhost:8080/user/${localStorage.getItem("id")}`
-    );
-    const userObj = getResponse.data;
-
-    userObj.userWishlist = userObj.userWishlist || [];
-
-    const newWishlist = userObj.userWishlist.filter(
-      (item) => product.id !== item.id
-    );
-
-    userObj.userWishlist = newWishlist;
-
-    const postResponse = await axios.put(
-      `http://localhost:8080/user/${localStorage.getItem("id")}`,
-      userObj
-    );
-
-
-    store.dispatch(removeFromWishlist({ userObj }));
-    toast.success("Product removed from the wishlist!");
+  const removeFromWishlistHandler = async () => {
+    try {
+      // If product is in wishlist, remove it
+      if (product.isInWishList) {
+        const response = await axios.patch(
+          `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/remove_from_wishlist/${localStorage.getItem("id")}`,
+          product
+        );
+        toast.success("Product removed from the wishlist!");
+        setProduct({
+          ...product,
+          isInWishList: false
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -120,14 +112,14 @@ const SingleProduct = () => {
       <div className="grid grid-cols-2 max-w-7xl mx-auto mt-5 max-lg:grid-cols-1 max-lg:mx-5">
         <div className="product-images flex flex-col justify-center max-lg:justify-start">
           <img
-            src={`https://${productData?.additionalImageUrls[currentImage]}`}
+            src={`${productData?.additionalImageUrls[currentImage]}`}
             className="w-96 text-center border border-gray-600 cursor-pointer"
             alt={productData.name}
           />
           <div className="other-product-images mt-1 grid grid-cols-3 w-96 gap-y-1 gap-x-2 max-sm:grid-cols-2 max-sm:w-64">
             {productData?.additionalImageUrls.map((imageObj, index) => (
               <img
-                src={`https://${imageObj}`}
+                src={`${imageObj}`}
                 key={nanoid()}
                 onClick={() => setCurrentImage(index)}
                 alt={productData.name}
@@ -140,9 +132,8 @@ const SingleProduct = () => {
           <h2 className="text-5xl max-sm:text-3xl text-accent-content">
             {productData?.name}
           </h2>
-          <SingleProductRating rating={rating} productData={productData} />
           <p className="text-3xl text-error">
-            ₪{productData?.price?.current?.value}
+            ₪{productData?.price}
           </p>
           <div className="text-xl max-sm:text-lg text-accent-content">
             {parse(productData?.description)}
@@ -153,16 +144,6 @@ const SingleProduct = () => {
               size={size}
               setSize={setSize}
             />
-          </div>
-          <div>
-            <label htmlFor="Quantity" className="sr-only">
-              {" "}
-              Quantity{" "}
-            </label>
-
-            <div className="flex items-center gap-1">
-              <QuantityInput quantity={quantity} setQuantity={setQuantity} />
-            </div>
           </div>
           <div className="flex flex-row gap-x-2 max-sm:flex-col max-sm:gap-x">
             <button
@@ -216,7 +197,6 @@ const SingleProduct = () => {
             )}
           </div>
           <div className="other-product-info flex flex-col gap-x-2">
-
             <div
               className={
                 productData?.isInStock
@@ -226,18 +206,13 @@ const SingleProduct = () => {
             >
               In Stock: {productData?.isInStock ? "Yes" : "No"}
             </div>
-            <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              SKU: {productData?.productCode}
-            </div>
+            
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
               Category: {productData?.category}
             </div>
-
           </div>
         </div>
       </div>
-
-      <SingleProductReviews rating={rating} productData={productData} />
     </>
   );
 };

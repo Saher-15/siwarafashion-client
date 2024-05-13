@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import "../styles/Landing.css";
-import { Hero, ProductElement} from "../components";
+import { Hero, ProductElement } from "../components";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const landingLoader = async () => {
   const response = await axios(
-    `http://localhost:8080/products?_page=1&_limit=8`
+    `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/get_trending_products`
   );
   const data = response.data;
+  console.log(response);
 
+  console.log(data);
   return { products: data };
 };
 
@@ -28,12 +30,11 @@ const Landing = () => {
         <div className="selected-products-grid max-w-7xl mx-auto">
           {products.map((product) => (
             <ProductElement
-              key={product.id}
-              id={product.id}
+              key={product._id}
+              id={product._id}
               title={product.name}
               image={product.imageUrl}
-              rating={product.rating}
-              price={product.price.current.value}
+              price={product.price}
             />
           ))}
         </div>

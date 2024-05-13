@@ -27,9 +27,10 @@ export const shopLoader = async ({ request }) => {
     in_stock: params.stock === undefined ? false : true,
     current_page: Number(params.page) || 1
   };
+  const itemsPerPage = 12;
 
   // set params in get apis
-  let parameter = (`?_start=${(filterObj.current_page - 1) * 12}&_limit=12`) + // pre defined that limit of response is 10 & page number count 1
+  let parameter = (`?_start=${(filterObj.current_page - 1) * 12}&_limit=12`) + // pre defined that limit of response is 12 & page number count 1
     (filterObj.category !== 'all' ? `&category=${filterObj.category}` : "") +
     ((filterObj.search != '') ? `&q=${encodeURIComponent(filterObj.search)}` : ``) +
     (filterObj.order ? `&_sort=price.current.value` : "") + // Check if the order exists, then sort it in ascending order. After that, the API response will be modified if descending order or any other filter is selected.
@@ -37,13 +38,13 @@ export const shopLoader = async ({ request }) => {
     (filterObj.price !== 'all' ? `&price.current.value_lte=${filterObj.price}` : ``) 
   try {
     const response = await axios(
-      `http://localhost:8080/products${parameter}`
+      `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}`
 
     );
-    let data = response.data;
-
+    let data = response.data.data;
+console.log(data);
     // sorting in descending order
-    if (filterObj.order && !(filterObj.order === "none" || filterObj.order === "price low")) data.sort((a, b) => b.price.current.value - a.price.current.value)
+    if (filterObj.order && !(filterObj.order === "none" || filterObj.order === "price low")) data.sort((a, b) => b.price - a.price)
     return { productsData: data, productsLength: data.length, page: filterObj.current_page };
   } catch (error) {
     console.log(error.response);
@@ -71,12 +72,11 @@ const Shop = () => {
           {productLoaderData.productsData.length !== 0 &&
             productLoaderData.productsData.map((product) => (
               <ProductElement
-                key={nanoid()}
-                id={product.id}
+                key={product._id}
+                id={product._id}
                 title={product.name}
                 image={product.imageUrl}
-                rating={product.rating}
-                price={product.price.current.value}
+                price={product.price}
               />
             ))}
         </div>
