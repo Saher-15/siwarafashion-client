@@ -56,9 +56,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     let regObj = {
-      // id: nanoid(),
       firstName,
       lastName,
       email,
@@ -66,28 +65,29 @@ const Register = () => {
       city,
       street,
       password,
-      // userWishlist: [],
     };
-
+  
     if (isValidate()) {
-      await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", {
-        firstName,
-        lastName,
-        email,
-        phone,
-        city,
-        street,
-        password
-      })
-        .then((res) => {
+      try {
+        const registrationResponse = await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", regObj);
+  
+        console.log(registrationResponse.data);
+        // Handle different response scenarios
+        if (registrationResponse.data.error === 'Email is taken') {
+          // If email is already taken, show error message
+          toast.error("Email is already taken");
+        } else {
+          // If registration is successful, show success message and navigate
           toast.success("Registration Successful");
           navigate("/login");
-        })
-        .catch((err) => {
-          toast.error("Failed: " + err.message);
-        });
+        }
+      } catch (error) {
+        // Handle any errors
+        toast.error("Failed: " + error.message);
+      }
     }
   };
+  
   return (
     <>
       <SectionTitle title="Register" path="Home | Register" />
