@@ -23,18 +23,13 @@ const cartSlice = createSlice({
             toast.error('Product removed from the cart!');
         },
         updateCartAmount: (state, action) => {
-            const cartItem = state.cartItems.find(item => item.id === action.payload.id);
-            cartItem.amount = Number(action.payload.amount);
             cartSlice.caseReducers.calculateTotals(state);
         },
         calculateTotals: (state) => {
-            let amount = 0;
             let total = 0;
             state.cartItems.forEach(item => {
-                amount += item.amount;
-                total += item.amount * item.price;
+                total += item.price;
             });
-            state.amount = amount;
             state.total = total;
         },
         addToCart: (state, action) => {

@@ -8442,7 +8442,18 @@
       "phone": "0504368748",
       "adress": "Nazareth",
       "password": "Saher123!",
-      "userWishlist": []
+      "userWishlist": [
+        {
+          "id": 205082351,
+          "title": "Walk London Milano lace up boots in black leather",
+          "image": "images.asos-media.com/products/walk-london-milano-lace-up-boots-in-black-leather/205082351-1-black",
+          "price": 115,
+          "brandName": "WALK LONDON",
+          "amount": 1,
+          "selectedSize": 37,
+          "isInWishList": false
+        }
+      ]
     }
   ],
   "orders": [
@@ -8667,6 +8678,22 @@
         }
       ],
       "id": 10
+    },
+    {
+      "userId": "6638a04448dea5be4cab0aec",
+      "orderStatus": "in progress",
+      "subtotal": null,
+      "cartItems": [
+        {
+          "id": "6640c844799806d9e63359b7",
+          "name": "Ergonomic Granite Keyboard",
+          "imageUrl": "https://loremflickr.com/640/480?lock=8368281857556480",
+          "price": 71,
+          "selectedSize": "L",
+          "isInWishList": false
+        }
+      ],
+      "id": 11
     }
   ]
 }

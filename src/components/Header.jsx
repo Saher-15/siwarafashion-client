@@ -17,7 +17,7 @@ import axios from "axios";
 import { clearWishlist, updateWishlist } from "../features/wishlist/wishlistSlice";
 
 const Header = () => {
-  const { amount } = useSelector((state) => state.cart);
+  // const { amount } = useSelector((state) => state.cart);
   const { total } = useSelector((state) => state.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [id, setId] = useState(localStorage.getItem("id"));
@@ -27,29 +27,10 @@ const Header = () => {
   const loginState = useSelector((state) => state.auth.isLoggedIn);
 
 
-  const fetchWishlist = async () => {
-    if(loginState){
-      try {
-        const getResponse = await axios.get(`http://localhost:8080/user/${localStorage.getItem("id")}`);
-        const userObj = getResponse.data;
-  
-        store.dispatch(updateWishlist({userObj}));
-        
-       
-      } catch (error) {
-        console.error(error);
-      }
-    }else{
-      store.dispatch(clearWishlist());
-    }
-
-  };
-
-
   useEffect(() => {
     setIsLoggedIn(loginState);
 
-      fetchWishlist();
+      // fetchWishlist();
     
   }, [loginState]);
 
@@ -60,13 +41,13 @@ const Header = () => {
           <li>
             <FaHeadphones className="text-2xl max-sm:text-lg text-accent-content" />
             <span className="text-2xl max-sm:text-lg text-accent-content">
-              +972 123456789
+              +972 528788695
             </span>
           </li>
           <li>
             <FaRegEnvelope className="text-2xl max-sm:text-lg text-accent-content" />{" "}
             <span className="text-2xl max-sm:text-lg text-accent-content">
-              email@gmail.com
+            siwarastore@gmail.com
             </span>
           </li>
         </ul>
@@ -81,26 +62,7 @@ const Header = () => {
             SiwaraFashion
           </Link>
         </div>
-        <div className="flex-none">
-          <Link
-            to="/search"
-            className="btn btn-ghost btn-circle text-accent-content"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </Link>
+        <div className="flex-none">       
           <button
             className="text-accent-content btn btn-ghost btn-circle text-xl"
             onClick={() => dispatch(changeMode())}
@@ -137,9 +99,9 @@ const Header = () => {
               className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
-                <span className="font-bold text-lg text-accent-content">
+                {/* <span className="font-bold text-lg text-accent-content">
                   {amount} Items
-                </span>
+                </span> */}
                 <span className="text-info text-accent-content">
                   Subtotal: ₪{total.toFixed(2)}
                 </span>
@@ -158,7 +120,7 @@ const Header = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://xsgames.co/randomusers/avatar.php?g=male" />
+                  <img src="src\assets\user.jpg" />
                 </div>
               </label>
               <ul
@@ -167,7 +129,7 @@ const Header = () => {
               >
                 <li>
                   <Link
-                    to="/user-profile-photo"
+                    to="/user-profile"
                     className="justify-between text-accent-content"
                   >
                     Profile
@@ -226,11 +188,11 @@ const Header = () => {
                   About us
                 </NavLink>
               </li>
-              <li className="text-xl">
+              {/* <li className="text-xl">
                 <NavLink className="text-accent-content" to="/contact">
                   Contact
                 </NavLink>
-              </li>
+              </li> */}
               {!isLoggedIn && (
                 <>
                   <li className="text-xl">
@@ -259,9 +221,9 @@ const Header = () => {
           <NavLink className="text-accent-content" to="/about-us">
             About us
           </NavLink>
-          <NavLink className="text-accent-content" to="/contact">
+          {/* <NavLink className="text-accent-content" to="/contact">
             Contact
-          </NavLink>
+          </NavLink> */}
           {!isLoggedIn && (
             <>
               <NavLink className="text-accent-content" to="/login">

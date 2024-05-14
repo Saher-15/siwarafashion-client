@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { store } from "../store";
 import { calculateTotals, clearCart } from "../features/cart/cartSlice";
+import { store } from "../store";
 
 const ThankYou = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -14,33 +14,51 @@ const ThankYou = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const saveToOrderHistory = async () => {
+  const createNewOrder = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/orders", {
-        userId: localStorage.getItem("id"),
-        orderStatus: "in progress",
+      const userData = localStorage.getItem("user_Data");
+      console.log(userData);
+      const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/order/new_order/${localStorage.getItem("id")}`,{ 
         subtotal: total,
         cartItems: cartItems,
       });
+
+      // Save order to user's order history
+      // saveOrderToHistory(response.data._id);
+
+      // Clear cart and recalculate totals upon successful order creation
+      store.dispatch(clearCart());
+      store.dispatch(calculateTotals());
+      toast.success("Order completed");
     } catch (err) {
-      toast.error(err.response);
+      console.error("Error creating order:", err);
+      toast.error("Failed to create order");
     }
   };
 
-  if (cartItems.length > 0) {
-    saveToOrderHistory();
-    store.dispatch(clearCart());
-    store.dispatch(calculateTotals());
-    toast.success("Order completed");
-  }
+  // const saveOrderToHistory = async (orderId) => {
+  //   try {
+  //     const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/get_orders`, {
+  //       userId: localStorage.getItem("id"),
+  //       orderId: orderId,
+  //     });
+  //     console.log("Order saved to history:", response.data);
+  //   } catch (err) {
+  //     console.error("Error saving order to history:", err);
+  //   }
+  // };
 
   useEffect(() => {
     if (!loginState) {
       toast.error("You must be logged in to access this page");
       navigate("/");
+    } else {
+      // Check if there are items in the cart and create order
+      if (cartItems.length > 0) {
+        createNewOrder();
+      }
     }
   }, []);
-
 
   return (
     <>

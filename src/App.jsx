@@ -11,7 +11,6 @@ import {
   SingleProduct,
   Wishlist,
   Profile,
-  Search,
   ThankYou,
   OrderHistory
 } from "./pages";
@@ -19,7 +18,8 @@ import { landingLoader } from "./pages/Landing";
 import { singleProductLoader } from "./pages/SingleProduct";
 import { shopLoader } from "./pages/Shop";
 import { ToastContainer } from "react-toastify";
-
+import { wishListLoader } from "./pages/Wishlist";
+import { orderHistoryLoader } from "./pages/OrderHistory";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -68,14 +68,12 @@ const router = createBrowserRouter([
       {
         path: "wishlist",
         element: <Wishlist />,
+        loader: wishListLoader
       },
+
       {
         path: "user-profile",
         element: <Profile />,
-      },
-      {
-        path:"search",
-        element: <Search />
       },
       {
         path:"thank-you",
@@ -83,7 +81,8 @@ const router = createBrowserRouter([
       },
       {
         path:"order-history",
-        element: <OrderHistory />
+        element: <OrderHistory />,
+        loader: orderHistoryLoader
       }
     ],
   },

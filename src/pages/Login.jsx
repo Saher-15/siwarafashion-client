@@ -1,61 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SectionTitle } from "../components";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { store } from "../store";
-import { loginUser, logoutUser } from "../features/auth/authSlice";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
+import { store } from "../store";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loginState = useSelector((state) => state.auth.isLoggedIn);
 
-  useEffect(() => {
-    if (loginState) {
-      localStorage.clear();
-      store.dispatch(logoutUser());
-    }
-  }, []);
-
-  const isValidate = () => {
-    let isProceed = true;
-
-    if (email.length === 0) {
-      isProceed = false;
-      toast.warn("Please enter a email");
-    } else if (password.length < 6) {
-      isProceed = false;
-      toast.warn("Password must be minimum 6 characters");
-    }
-    return isProceed;
-  };
-
-  const proceedLogin = async(e) => {
+  const proceedLogin = async (e) => {
     e.preventDefault();
-    if (isValidate()) {
-      await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/login", {
+    try {
+      const response = await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/login", {
         email,
         password
-      })
-        .then((res) => {
-          let data = res.data.user;
-          console.log(data);
-          if (data.email === email ) {
-            toast.success("Login successful");
-            localStorage.setItem("id", data._id);
-            store.dispatch(loginUser());
-            navigate("/");
-          } else {
-            toast.warn("Email or password is incorrect");
-          }
-        })
-        .catch((err) => {
-          toast.error("Login failed due to: " + err.message);
-        });
+      });
+      const data = response.data.user;
+      if (data.email === email) {
+        toast.success("Login successful");
+        localStorage.setItem("id", data._id);
+        const userdata = JSON.stringify(data);
+        localStorage.setItem("user_Data", userdata);
+        store.dispatch(loginUser());
+        // console.log(data);
+        navigate("/");
+      } else {
+        toast.warn("Email or password is incorrect");
+      }
+    } catch (error) {
+      toast.error("Login failed due to: " + error.message);
     }
   };
 
