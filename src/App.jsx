@@ -11,6 +11,7 @@ import {
   SingleProduct,
   Wishlist,
   Profile,
+  ChangePassword,
   ThankYou,
   OrderHistory
 } from "./pages";
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "user-profile",
         element: <Profile />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePassword />,
       },
       {
         path:"thank-you",

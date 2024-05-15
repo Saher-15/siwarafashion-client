@@ -30,8 +30,8 @@ const Header = () => {
   useEffect(() => {
     setIsLoggedIn(loginState);
 
-      // fetchWishlist();
-    
+    // fetchWishlist();
+
   }, [loginState]);
 
   return (
@@ -47,7 +47,7 @@ const Header = () => {
           <li>
             <FaRegEnvelope className="text-2xl max-sm:text-lg text-accent-content" />{" "}
             <span className="text-2xl max-sm:text-lg text-accent-content">
-            siwarastore@gmail.com
+              siwarastore@gmail.com
             </span>
           </li>
         </ul>
@@ -62,7 +62,7 @@ const Header = () => {
             SiwaraFashion
           </Link>
         </div>
-        <div className="flex-none">       
+        <div className="flex-none">
           <button
             className="text-accent-content btn btn-ghost btn-circle text-xl"
             onClick={() => dispatch(changeMode())}
@@ -155,7 +155,7 @@ const Header = () => {
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
-  
+
             {/* Page content here */}
             <label htmlFor="my-drawer" className="btn drawer-button">
               <HiMiniBars3BottomLeft className="text-4xl" />
@@ -167,11 +167,11 @@ const Header = () => {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-                    
+
             <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content mt-4">
-            <label htmlFor="my-drawer" className="btn drawer-button">
-            <FaWindowClose className="text-3xl ml-auto" />
-            </label>
+              <label htmlFor="my-drawer" className="btn drawer-button">
+                <FaWindowClose className="text-3xl ml-auto" />
+              </label>
               {/* Sidebar content here */}
               <li className="text-xl">
                 <NavLink className="text-accent-content" to="/">
@@ -179,9 +179,10 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="text-xl">
-                <NavLink className="text-accent-content" to="/shop">
+                <NavLink className="text-accent-content" to="/shop?price=10000&stock=true">
                   Shop
                 </NavLink>
+
               </li>
               <li className="text-xl">
                 <NavLink className="text-accent-content" to="/about-us">
@@ -215,7 +216,7 @@ const Header = () => {
           <NavLink className="text-accent-content" to="/">
             Home
           </NavLink>
-          <NavLink className="text-accent-content" to="/shop">
+          <NavLink className="text-accent-content" to="/shop?price=10000&stock=true">
             Shop
           </NavLink>
           <NavLink className="text-accent-content" to="/about-us">

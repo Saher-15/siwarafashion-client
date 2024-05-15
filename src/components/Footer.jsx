@@ -5,6 +5,7 @@ import { TbBrandGoogleMaps } from "react-icons/tb";
 import { useSelector } from "react-redux";
 
 const Footer = () => {
+
   const handleClickInsta = () => {
     window.location.href = 'https://www.instagram.com/siwarafashion?igsh=bnpvOGo0aWkybHly';
   };
@@ -18,9 +19,10 @@ const Footer = () => {
         <Link to="/" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           Home
         </Link>
-        <Link to="/shop" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
+        <Link to="/shop?price=10000&stock=true" className="link link-hover text-2xl max-md:text-xl text-accent-content">
           Shop
         </Link>
+
         <Link to="/about" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           About us
         </Link>
