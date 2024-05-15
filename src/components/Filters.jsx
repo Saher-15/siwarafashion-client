@@ -59,7 +59,7 @@ const Filters = () => {
       <FormCheckbox
         label="Only products in stock"
         name="stock"
-        defaultValue="true"
+        defaultValue="ture"
       />
 
       {/* BUTTONS */}
@@ -70,10 +70,10 @@ const Filters = () => {
       >
         search
       </button>
-      <Link to="/shop?page=1" className="btn btn-primary btn-sm">
+      <Link to="/shop?page=1?stock=true" className="btn btn-primary btn-sm">
         reset
       </Link>
-    </Form >
+    </Form>
   );
 };
 
