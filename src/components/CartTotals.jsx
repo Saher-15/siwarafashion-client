@@ -1,37 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import "../styles/SubTotal.css";
 
 const CartTotals = () => {
   const { total } = useSelector((state) => state.cart);
-  console.log(total);
-  const tax = total / 5;
-  const shipping = 50;
+  const [shipping, setShipping] = useState(30);
+
+  const handleShippingChange = (e) => {
+    const selectedOption = e.target.value;
+    if (selectedOption === 'nazareth') {
+      setShipping(30);
+    } else if(selectedOption === 'haifa'){
+      setShipping(40);
+    } 
+    else setShipping(50);
+  };
+
   return (
-    <div className='card bg-base-200'>
+    <div className='card cart-totals-card'>
       <div className='card-body'>
         {/* SUBTOTAL */}
-        <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
+        <p className='subtotal-text'>
           <span>Subtotal</span>
-          <span className='font-medium'>₪{ Math.round(total) }</span>
+          <span className='font-medium'>₪{Math.round(total)}</span>
+        </p>
+        <p className='subtotal-text'>
+          <span>Total after 10% discount</span>
+          <span className='font-medium'>₪{Math.round(total*0.9)}</span>
         </p>
         {/* SHIPPING */}
-        <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
+        
+          <label htmlFor='shippingSelect'>Shipping Area:</label>
+          <select id='shippingSelect' onChange={handleShippingChange}>
+            <option value='nazareth'>Nazareth area</option>
+            <option value='haifa'>Haifa area</option>
+            <option value='telaviv'>Tel-Aviv area</option>
+          </select>
+          <p className='subtotal-text'>
           <span>Shipping</span>
-          <span className='font-medium'>₪{ shipping }</span>
-        </p>
-        {/* Tax */}
-        <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
-          <span>Tax 20%</span>
-          <span className='font-medium'>₪{Math.round(tax)}</span>
+          <span className='font-medium'>₪{shipping}</span>
         </p>
         {/* Order Total */}
-        <p className='flex justify-between text-sm mt-4 pb-2 text-accent-content'>
+        <p className='order-total-text'>
           <span>Order Total</span>
-          <span className='font-medium'>₪{ Math.round(total + shipping + tax) }</span>
+          <span className='font-medium'>₪{Math.round(total*0.9) + shipping}</span>
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartTotals
+export default CartTotals;
