@@ -74,7 +74,7 @@ export const shopLoader = async ({ request }) => {
     const url = buildUrl(filterObj.category, filterObj.order, filterObj.price, filterObj.in_stock)
     console.log(url);
     const response = await axios(
-      `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}${url}}`
+      `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}${url}`
 
     );
     let data = response.data.data;
