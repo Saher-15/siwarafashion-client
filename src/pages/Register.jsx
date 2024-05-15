@@ -12,7 +12,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAdress] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
 
   const navigate = useNavigate();
 
@@ -32,9 +33,9 @@ const Register = () => {
     } else if (phone.length < 4) {
       isProceed = false;
       errorMessage = "Phone must be longer than 3 characters";
-    } else if (address.length < 4) {
+    } else if (city.length < 3) {
       isProceed = false;
-      errorMessage = "Adress must be longer than 3 characters";
+      errorMessage = "City must be longer than 2 characters";
     } else if (password.length < 6) {
       isProceed = false;
       errorMessage = "Please enter a password longer than 5 characters";
@@ -53,38 +54,40 @@ const Register = () => {
     return isProceed;
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     let regObj = {
-      // id: nanoid(),
       firstName,
       lastName,
       email,
       phone,
-      address,
+      city,
+      street,
       password,
-      // userWishlist: [],
     };
-
+  
     if (isValidate()) {
-      await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", {
-        firstName,
-        lastName,
-        email,
-        phone,
-        address,
-        password
-      })
-        .then((res) => {
+      try {
+        const registrationResponse = await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", regObj);
+  
+        console.log(registrationResponse.data);
+        // Handle different response scenarios
+        if (registrationResponse.data.error === 'Email is taken') {
+          // If email is already taken, show error message
+          toast.error("Email is already taken");
+        } else {
+          // If registration is successful, show success message and navigate
           toast.success("Registration Successful");
           navigate("/login");
-        })
-        .catch((err) => {
-          toast.error("Failed: " + err.message);
-        });
+        }
+      } catch (error) {
+        // Handle any errors
+        toast.error("Failed: " + error.message);
+      }
     }
   };
+  
   return (
     <>
       <SectionTitle title="Register" path="Home | Register" />
@@ -133,13 +136,23 @@ const Register = () => {
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">
-                Address
+                City
               </label>
               <input
                 type="text"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                value={address}
-                onChange={(e) => setAdress(e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required={true}
+              />
+              <label className="font-semibold text-sm pb-1 block text-accent-content">
+                Street
+              </label>
+              <input
+                type="text"
+                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">

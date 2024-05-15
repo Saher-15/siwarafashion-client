@@ -1,76 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SectionTitle } from "../components";
-import axios from "axios";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios
 
 const Profile = () => {
-  const [id, setId] = useState(localStorage.getItem("id"));
-  const [userData, setUserData] = useState({});
-  const loginState = useSelector((state) => state.auth.isLoggedIn);
-  const wishItems = useSelector((state) => state.wishlist.wishItems);
   const [userFormData, setUserFormData] = useState({
-    id: "",
-    name: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
-    adress: "",
-    password: "",
+    city: "",
+    street:""
   });
-  const navigate = useNavigate();
-
-  const getUserData = async () => {
-    try {
-      const response = await axios(`http://localhost:8080/user/${id}`);
-      const data = response.data;
-      setUserFormData({
-        name: data.name,
-        lastname: data.lastname,
-        email: data.email,
-        phone: data.phone,
-        adress: data.adress,
-        password: data.password,
-      });
-    } catch (error) {
-      toast.error("Error: ", error.response);
-    }
-  };
 
   useEffect(() => {
-    if (loginState) {
-      getUserData();
+    // Retrieve user data from local storage
+    const userData = localStorage.getItem("user_Data");
+
+    if (userData) {
+      const parsedUserData = JSON.parse(userData);
+      setUserFormData({
+        firstName: parsedUserData.firstName,
+        lastName: parsedUserData.lastName,
+        email: parsedUserData.email,
+        phone: parsedUserData.phone,
+        city: parsedUserData.city,
+        street: parsedUserData.street,
+      });
     } else {
-      toast.error("You must be logged in to access this page");
-      navigate("/");
+      toast.error("User data not found in local storage");
     }
   }, []);
 
   const updateProfile = async (e) => {
     e.preventDefault();
-    try{
-
-      const getResponse = await axios(`http://localhost:8080/user/${id}`);
-      const userObj = getResponse.data;
-
-      // saljemo get(default) request
-      const putResponse = await axios.put(`http://localhost:8080/user/${id}`, {
-        id: id,
-        name: userFormData.name,
-        lastname: userFormData.lastname,
-        email: userFormData.email,
-        phone: userFormData.phone,
-        adress: userFormData.adress,
-        password: userFormData.password,
-        userWishlist: await userObj.userWishlist
-        //userWishlist treba da stoji ovde kako bi sacuvao stanje liste zelja
-      });
-      const putData = putResponse.data;
-    }catch(error){
-      console.log(error.response);
+    console.log(userFormData);
+    try {
+      // Make an HTTP request to update user profile
+      const response = await axios.patch(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/update_user_info/${localStorage.getItem("id")}`, userFormData);
+      
+      // Handle success
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      // Handle error
+      toast.error("Failed to update profile");
     }
-  }
+  };
 
   return (
     <>
@@ -85,8 +60,8 @@ const Profile = () => {
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full lg:max-w-xs"
-              value={userFormData.name}
-              onChange={(e) => {setUserFormData({...userFormData, name: e.target.value})}}
+              value={userFormData.firstName}
+              onChange={(e) => {setUserFormData({...userFormData, firstName: e.target.value})}}
             />
           </div>
 
@@ -98,8 +73,8 @@ const Profile = () => {
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full lg:max-w-xs"
-              value={userFormData.lastname}
-              onChange={(e) => {setUserFormData({...userFormData, lastname: e.target.value})}}
+              value={userFormData.lastName}
+              onChange={(e) => {setUserFormData({...userFormData, lastName: e.target.value})}}
             />
           </div>
 
@@ -112,7 +87,7 @@ const Profile = () => {
               placeholder="Type here"
               className="input input-bordered w-full lg:max-w-xs"
               value={userFormData.email}
-              onChange={(e) => {setUserFormData({...userFormData, email: e.target.value})}}
+              // onChange={(e) => {setUserFormData({...userFormData, email: e.target.value})}}
             />
           </div>
 
@@ -131,18 +106,31 @@ const Profile = () => {
 
           <div className="form-control w-full lg:max-w-xs">
             <label className="label">
-              <span className="label-text">Your Adress</span>
+              <span className="label-text">Your City</span>
             </label>
             <input
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full lg:max-w-xs"
-              value={userFormData.adress}
-              onChange={(e) => {setUserFormData({...userFormData, adress: e.target.value})}}
+              value={userFormData.city}
+              onChange={(e) => {setUserFormData({...userFormData, city: e.target.value})}}
             />
           </div>
 
           <div className="form-control w-full lg:max-w-xs">
+            <label className="label">
+              <span className="label-text">Your Street</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered w-full lg:max-w-xs"
+              value={userFormData.street}
+              onChange={(e) => {setUserFormData({...userFormData, street: e.target.value})}}
+            />
+          </div>
+
+          {/* <div className="form-control w-full lg:max-w-xs">
             <label className="label">
               <span className="label-text">Your Password</span>
             </label>
@@ -153,7 +141,7 @@ const Profile = () => {
               value={userFormData.password}
               onChange={(e) => {setUserFormData({...userFormData, password: e.target.value})}}
             />
-          </div>
+          </div> */}
         </div>
         <button
           className="btn btn-lg bg-blue-600 hover:bg-blue-500 text-white mt-10"

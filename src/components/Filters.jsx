@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import FormInput from "./FormInput";
-import { Form, Link } from "react-router-dom";
 import FormRange from "./FormRange";
 import FormSelect from "./FormSelect";
 import FormCheckbox from "./FormCheckbox";
@@ -8,10 +6,10 @@ import FormCheckbox from "./FormCheckbox";
 const Filters = () => {
   const [selectCategoryList, setSelectCategoryList] = useState([
     "all",
-    "shoes",
+    "Shoes",
     "slippers",
     "heels",
-    "t-shirts",
+    "T-Shirt",
     "jackets",
     "caps",
     "shorts",
@@ -20,24 +18,16 @@ const Filters = () => {
     "shirts",
     "boots",
     "overshirts",
-    "pants",
-    "jeans",
-    "socks",
-    "belts",
-    "trainers",
+    "Underwear",
+    "Jeans",
+    "Hoodie",
+    "Belts",
+    "Dress",
   ]);
 
   return (
-    <Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4  gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
-      {/* SEARCH */}
-      <FormInput
-        type="search"
-        label="search product"
-        name="search"
-        size="input-sm"
-        defaultValue=""
-      />
-      {/* CATEGORIES */}
+    <form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4  gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
+      {/* Category */}
       <FormSelect
         label="select category"
         name="category"
@@ -46,16 +36,16 @@ const Filters = () => {
         defaultValue="all"
       />
 
-      {/* ORDER */}
+      {/* Order */}
       <FormSelect
         label="sort by"
         name="order"
-        list={["none", "price high", "price low"]}
+        list={["none", "high to low", "low to high"]}
         size="select-sm"
         defaultValue="a-z"
       />
 
-      {/* PRICE */}
+      {/* Price */}
       <FormRange
         name="price"
         label="select price"
@@ -67,21 +57,20 @@ const Filters = () => {
       <FormCheckbox
         label="Only products in stock"
         name="stock"
-        defaultValue="false"
+        defaultChecked // This sets the default value to true
       />
 
-      {/* BUTTONS */}
+      {/* Search */}
+      {/* You can add a search component here if needed */}
 
+      {/* Submit Button */}
       <button
         type="submit"
         className="btn bg-blue-600 hover:bg-blue-500 text-white btn-sm"
       >
-        search
+        Search
       </button>
-      <Link to="/shop?page=1" className="btn btn-primary btn-sm">
-        reset
-      </Link>
-    </Form>
+    </form>
   );
 };
 

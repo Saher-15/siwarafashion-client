@@ -24,9 +24,9 @@ const Footer = () => {
         <Link to="/about" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           About us
         </Link>
-        <Link to="/contact" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
+        {/* <Link to="/contact" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           Contact
-        </Link>
+        </Link> */}
         {!loginState && (
           <>
             <Link

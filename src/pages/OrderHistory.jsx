@@ -5,32 +5,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { useLoaderData } from "react-router-dom";
+
+
+export const orderHistoryLoader = async () => {
+  const response = await axios.get(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/get_orders/${localStorage.getItem("id")}`);
+  return { orderHistory: response.data };
+};
+
+
+
 
 const OrderHistory = () => {
+  const { orderHistory } = useLoaderData();
   // cancelled, in progress, delivered
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(orderHistory);
 
-  const getOrderHistory = async () => {
-    try {
-      // saljemo get(default) request
-      const response = await axios.get("http://localhost:8080/orders");
-      const data = response.data;
-      setOrders(
-        data.filter((order) => order.userId === localStorage.getItem("id"))
-      );
-    } catch (error) {
-      toast.error(error.response);
-    }
-  };
+
 
   useEffect(() => {
     if (!loginState) {
       toast.error("You must be logged in to access this page");
       navigate("/");
-    } else {
-      getOrderHistory();
     }
   }, []);
 
@@ -71,7 +69,6 @@ const OrderHistory = () => {
                           <th>Image</th>
                           <th>Name</th>
                           <th>Size</th>
-                          <th>Amount</th>
                           <th>Price</th>
                         </tr>
                       </thead>
@@ -79,11 +76,10 @@ const OrderHistory = () => {
                         {order.cartItems.map((product, counter) => (
                           <tr className="text-accent-content" key={nanoid()}>
                             <th>{counter + 1}</th>
-                            <th><img src={`https://${product.image}`} alt="" className="w-10" /></th>
-                            <td>{product.title}</td>
+                            <th><img src={`${product.imageUrl}`} alt="" className="w-10" /></th>
+                            <td>{product.name}</td>
                             <td>{product.selectedSize}</td>
-                            <td>{product.amount}</td>
-                            <td>₪{(product.price * product.amount).toFixed(2)}</td>
+                            <td>₪{(product.price).toFixed(2)}</td>
                           </tr>
                         ))}
                         <tr>
@@ -102,15 +98,8 @@ const OrderHistory = () => {
                         </tr>
                         <tr>
                           <td colSpan="5" className="text-center">
-                            <h3 className="text-md text-accent-content">
-                              Tax: 20%: ₪{ Math.round(order?.subtotal / 5) }
-                            </h3>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colSpan="5" className="text-center">
                             <h3 className="text-xl text-accent-content">
-                              - Order Total: ₪{ Math.round(order?.subtotal + 50 + (order?.subtotal / 5)) } -
+                              - Order Total: ₪{ Math.round(order?.subtotal + 35) } -
                             </h3>
                           </td>
                         </tr>

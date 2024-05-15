@@ -1,23 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  QuantityInput,
   SectionTitle,
   SelectSize,
 } from "../components";
 import { FaHeart } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
-import { Link, useLoaderData } from "react-router-dom";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
-import {
-  updateWishlist,
-  removeFromWishlist,
-} from "../features/wishlist/wishlistSlice";
+import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-import { store } from "../store";
+import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
 
 export const singleProductLoader = async ({ params }) => {
   const { id } = params;
@@ -27,10 +22,7 @@ export const singleProductLoader = async ({ params }) => {
 
 const SingleProduct = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(0);
-  const { wishItems } = useSelector((state) => state.wishlist);
-  const { userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const { productData } = useLoaderData();
@@ -91,9 +83,8 @@ const SingleProduct = () => {
     try {
       // If product is in wishlist, remove it
       if (product.isInWishList) {
-        const response = await axios.patch(
-          `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/remove_from_wishlist/${localStorage.getItem("id")}`,
-          product
+        const response = await axios.delete(
+          `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/remove_item_from_wishlist/${localStorage.getItem("id")}/${product.id}`,
         );
         toast.success("Product removed from the wishlist!");
         setProduct({
@@ -105,6 +96,7 @@ const SingleProduct = () => {
       console.error(error);
     }
   };
+
 
   return (
     <>

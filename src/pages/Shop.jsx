@@ -29,22 +29,58 @@ export const shopLoader = async ({ request }) => {
   };
   const itemsPerPage = 12;
 
+  function buildUrl(category, sort_by, max_price, is_in_stock) {
+    console.log(category, sort_by, max_price, is_in_stock);
+    let string;
+    let updatedSortBy = sort_by; // Create a new variable to store the updated sort_by value
+    if (sort_by === 'high to low') {
+      updatedSortBy = 'desc'; // Update the local variable
+    }
+    else if (sort_by === 'low to high') {
+      updatedSortBy = 'asc'; // Update the local variable
+    }
+    else if (sort_by === 'none') {
+      updatedSortBy = ''; // Update the local variable
+    }
+    if (max_price === 'all') {
+      max_price = Number.MAX_VALUE;
+    }
+
+    if (category === 'all' && updatedSortBy === '') {
+      string = `&max_price=${max_price}&is_in_stock=${is_in_stock}`;
+    }
+    else if (category === 'all' && updatedSortBy !== '') {
+      string = `&max_price=${max_price}&is_in_stock=${is_in_stock}&sort_by=${updatedSortBy}`;
+    }
+    else if (category !== 'all' && updatedSortBy === '') {
+      string = `&max_price=${max_price}&is_in_stock=${is_in_stock}&category=${category}`;
+    }
+    else if (category !== 'all' && updatedSortBy !== '') {
+      string = `&max_price=${max_price}&is_in_stock=${is_in_stock}&category=${category}&sort_by=${updatedSortBy}`;
+    }
+    return string;
+}
+
+
+
   // set params in get apis
-  let parameter = (`?_start=${(filterObj.current_page - 1) * 12}&_limit=12`) + // pre defined that limit of response is 12 & page number count 1
-    (filterObj.category !== 'all' ? `&category=${filterObj.category}` : "") +
-    ((filterObj.search != '') ? `&q=${encodeURIComponent(filterObj.search)}` : ``) +
-    (filterObj.order ? `&_sort=price.current.value` : "") + // Check if the order exists, then sort it in ascending order. After that, the API response will be modified if descending order or any other filter is selected.
-    (filterObj.in_stock ? (`&isInStock`) : '') +
-    (filterObj.price !== 'all' ? `&price.current.value_lte=${filterObj.price}` : ``) 
+  // let parameter = (`?_start=${(filterObj.current_page - 1) * 12}&_limit=12`) + // pre defined that limit of response is 12 & page number count 1
+  //   (filterObj.category !== 'all' ? `&category=${filterObj.category}` : "") +
+  //   ((filterObj.search != '') ? `&q=${encodeURIComponent(filterObj.search)}` : ``) +
+  //   (filterObj.order ? `&_sort=price.current.value` : "") + // Check if the order exists, then sort it in ascending order. After that, the API response will be modified if descending order or any other filter is selected.
+  //   (filterObj.in_stock ? (`&isInStock`) : '') +
+  //   (filterObj.price !== 'all' ? `&price.current.value_lte=${filterObj.price}` : ``) 
   try {
-    const response = await axios(
-      `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}`
+    const url = buildUrl(filterObj.category, filterObj.order, filterObj.price, filterObj.in_stock)
+    console.log(url);
+    const response = await axios.get(
+      `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}${url}`
 
     );
     let data = response.data.data;
-console.log(data);
+    console.log(data);
     // sorting in descending order
-    if (filterObj.order && !(filterObj.order === "none" || filterObj.order === "price low")) data.sort((a, b) => b.price - a.price)
+    // if (filterObj.order && !(filterObj.order === "none" || filterObj.order === "price low")) data.sort((a, b) => b.price - a.price)
     return { productsData: data, productsLength: data.length, page: filterObj.current_page };
   } catch (error) {
     console.log(error.response);
@@ -53,9 +89,6 @@ console.log(data);
 
   return null;
 };
-
-
-
 
 const Shop = () => {
 

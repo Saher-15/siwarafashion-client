@@ -11,7 +11,7 @@ const About = () => {
       <p className="text-lg text-center max-sm:text-sm max-sm:px-2 text-accent-content">
 
       </p>
-      <Link to="/contact" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white mt-5">Contact Us</Link>
+      {/* <Link to="/contact" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white mt-5">Contact Us</Link> */}
       </div>
     </div>
   );
