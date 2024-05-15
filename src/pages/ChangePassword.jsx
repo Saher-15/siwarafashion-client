@@ -5,15 +5,9 @@ import axios from "axios"; // Import Axios
 
 const ChangePassword = () => {
     const [userFormData, setUserFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        city: "",
-        street: "",
-        oldPassword: "",
-        newPassword: "",
-        confirmPassword: ""
+
+        oldPassword: "", // Initialize with empty string
+        newPassword: "", // Initialize with empty string
     });
 
     useEffect(() => {
@@ -34,35 +28,40 @@ const ChangePassword = () => {
 
     const updateProfile = async (e) => {
         e.preventDefault();
-        console.log(userFormData);
         try {
             // Check if new password and confirmation password match
             if (userFormData.newPassword !== userFormData.confirmPassword) {
                 toast.error("New password and confirmation password do not match");
                 return;
             }
+    
+            // Create an object with only oldPassword and newPassword
+            const requestData = {
+                oldPassword: userFormData.oldPassword,
+                newPassword: userFormData.newPassword
+            };
 
-            // Make an HTTP request to update user profile
-            const response = await axios.patch(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/change_password/${localStorage.getItem("id")}`, userFormData);
-
-            // Update local storage with the new user data
-            localStorage.setItem("user_Data", JSON.stringify(userFormData));
+            // Make an HTTP request to update user password
+            const response = await axios.patch(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/change_password/${localStorage.getItem("id")}`, requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
             // Handle success
-            toast.success("Profile updated successfully");
+            toast.success("Password changed successfully");
         } catch (error) {
             // Handle error
-            toast.error("Failed to update profile");
+            toast.error("Failed to change password");
         }
     };
+    
 
     return (
         <>
-            <SectionTitle title="User Profile" path="Home | User Profile" />
+            <SectionTitle title="Change Password" path="Home | Change Password" />
             <form className="max-w-7xl mx-auto text-center px-10" onSubmit={updateProfile}>
                 <div className="grid grid-cols-3 max-lg:grid-cols-1">
-                    
-
                     {/* Add fields for old password, new password, and confirmation password */}
                     <div className="form-control w-full lg:max-w-xs">
                         <label className="label">
@@ -105,10 +104,11 @@ const ChangePassword = () => {
                 </div>
                 <button
                     className="btn btn-lg bg-blue-600 hover:bg-blue-500 text-white mt-10"
-                    type="submit"
+                    onClick={updateProfile}
                 >
                     Change Password
                 </button>
+
             </form>
         </>
     );

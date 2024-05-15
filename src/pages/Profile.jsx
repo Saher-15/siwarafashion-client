@@ -50,6 +50,9 @@ const Profile = () => {
     }
   };
 
+  const navigateToChangePassword = () => {
+    window.location.href = '/change-password'; // Navigate to the desired URL
+  };
 
   return (
     <>
@@ -142,15 +145,15 @@ const Profile = () => {
         >
           Update Profile
         </button>
-
-      </form>
-      <button
+        <button
         className="btn btn-lg bg-blue-600 hover:bg-blue-500 text-white mt-5"
-        onClick={() => navigate("/change-password")}
+        onClick={navigateToChangePassword} // Call navigateToChangePassword when clicked
       >
         Change Password
       </button>
-
+      </form>
+      {/* Button to navigate to change password page */}
+      
     </>
   );
 };
