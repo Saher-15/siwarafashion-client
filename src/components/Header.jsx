@@ -72,7 +72,6 @@ const Header = () => {
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end">
-
             <button
               className="text-accent-content btn btn-ghost btn-circle text-xl"
               onClick={() => dispatch(changeMode())}
