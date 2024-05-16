@@ -26,6 +26,7 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const { productData } = useLoaderData();
+  const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
     // Check if the product is in the wishlist when component mounts
@@ -97,6 +98,19 @@ const SingleProduct = () => {
     }
   };
 
+  const isInCart = cartItems.some((item) => item.id === product.id);
+
+  const handleButtonClick = () => {
+    if (loginState) {
+      if (isInCart) {
+        dispatch(removeItem(product.id));
+      } else {
+        dispatch(addToCart(product));
+      }
+    } else {
+      toast.error("You must be logged in to add products to the cart");
+    }
+  };
 
   return (
     <>
@@ -140,27 +154,14 @@ const SingleProduct = () => {
           <div className="flex flex-row gap-x-2 max-sm:flex-col max-sm:gap-x">
             <button
               className={`btn bg-blue-600 hover:bg-blue-500 text-white ${!productData?.isInStock ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => {
-                if (loginState) {
-                  dispatch(addToCart(product));
-                } else {
-                  toast.error(
-                    "You must be logged in to add products to the cart"
-                  );
-                }
-              }}
+              onClick={handleButtonClick}
               disabled={!productData?.isInStock}
             >
+              <FaCartShopping className="text-xl mr-1" />
               {!productData?.isInStock ? (
-                <>
-                  <FaCartShopping className="text-xl mr-1" />
-                  Out of stock
-                </>
+                'Out of stock'
               ) : (
-                <>
-                  <FaCartShopping className="text-xl mr-1" />
-                  Add to cart
-                </>
+                isInCart ? 'Remove from cart' : 'Add to cart'
               )}
             </button>
 
