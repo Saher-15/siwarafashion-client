@@ -9,13 +9,13 @@ import { FaSun } from "react-icons/fa6";
 import { FaMoon } from "react-icons/fa6";
 import { FaWindowClose } from "react-icons/fa";
 import { FaRegClock } from 'react-icons/fa';
+import { FaRegUser } from 'react-icons/fa';
 
 import "../styles/Header.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeMode } from "../features/auth/authSlice";
 import { store } from "../store";
 import axios from "axios";
-import { clearWishlist, updateWishlist } from "../features/wishlist/wishlistSlice";
 
 const Header = () => {
   // const { amount } = useSelector((state) => state.cart);
@@ -52,7 +52,7 @@ const Header = () => {
             </span>
           </li>
           <li>
-          <FaRegClock className="text-2xl max-sm:text-lg text-accent-content" />
+            <FaRegClock className="text-2xl max-sm:text-lg text-accent-content" />
 
             <span className="text-2xl max-sm:text-lg text-accent-content">
               11:30-21:00
@@ -71,19 +71,20 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex-none">
-          <button
-            className="text-accent-content btn btn-ghost btn-circle text-xl"
-            onClick={() => dispatch(changeMode())}
-          >
-            {darkMode ? <FaSun /> : <FaMoon />}
-          </button>
-          <Link
-            to="/wishlist"
-            className="btn btn-ghost btn-circle text-accent-content"
-          >
-            <FaHeart className="text-xl" />
-          </Link>
           <div className="dropdown dropdown-end">
+
+            <button
+              className="text-accent-content btn btn-ghost btn-circle text-xl"
+              onClick={() => dispatch(changeMode())}
+            >
+              {darkMode ? <FaSun /> : <FaMoon />}
+            </button>
+            <Link
+              to="/wishlist"
+              className="btn btn-ghost btn-circle text-accent-content "
+            >
+              <FaHeart className="text-xl" />
+            </Link>
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
@@ -127,8 +128,8 @@ const Header = () => {
           {isLoggedIn && (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                  <img src="src\assets\user.jpg" />
+                <div>
+                  <FaRegUser className="text-2xl max-sm:text-lg text-accent-content" />
                 </div>
               </label>
               <ul
