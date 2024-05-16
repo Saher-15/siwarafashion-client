@@ -4,14 +4,14 @@ import "../styles/SubTotal.css";
 
 const CartTotals = () => {
   const { total } = useSelector((state) => state.cart);
-  const [shipping, setShipping] = useState(30);
+  const [shipping, setShipping] = useState(0);
 
   const handleShippingChange = (e) => {
     const selectedOption = e.target.value;
-    if (selectedOption === 'nazareth') {
-      setShipping(30);
-    } else if(selectedOption === 'haifa'){
-      setShipping(40);
+    if (selectedOption === 'pickUpFromStore') {
+      setShipping(0);
+    } else if(selectedOption === 'nazareth'){
+      setShipping(35);
     } 
     else setShipping(50);
   };
@@ -32,9 +32,9 @@ const CartTotals = () => {
         
           <label htmlFor='shippingSelect'>Shipping Area:</label>
           <select id='shippingSelect' onChange={handleShippingChange}>
+            <option value='pickUpFromStore'>Pick up from store</option>
             <option value='nazareth'>Nazareth area</option>
-            <option value='haifa'>Haifa area</option>
-            <option value='telaviv'>Tel-Aviv area</option>
+            <option value='jerusalim'>Jerusalim area and West bank</option>
           </select>
           <p className='subtotal-text'>
           <span>Shipping</span>
