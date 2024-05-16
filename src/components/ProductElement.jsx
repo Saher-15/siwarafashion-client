@@ -12,9 +12,11 @@ const ProductElement = ({ id, title, image, rating, price }) => {
       <div className="shadow-md rounded-lg max-w-sm bg-base-100">
         <Link to={`/shop/product/${id}`} onClick={() => window.scrollTo(0, 0)}>
           <img
-            className="rounded-t-lg p-8"
+            className="w-full h-[400px] object-cover rounded-t-md"
             src={`${image}`}
             alt="product image"
+            style={{ objectFit: 'cover' }}
+
           />
         </Link>
         <div className="px-5 pb-5">

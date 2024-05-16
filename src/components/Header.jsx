@@ -8,6 +8,7 @@ import { AiFillShopping } from "react-icons/ai";
 import { FaSun } from "react-icons/fa6";
 import { FaMoon } from "react-icons/fa6";
 import { FaWindowClose } from "react-icons/fa";
+import { FaRegClock } from 'react-icons/fa';
 
 import "../styles/Header.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +49,13 @@ const Header = () => {
             <FaRegEnvelope className="text-2xl max-sm:text-lg text-accent-content" />{" "}
             <span className="text-2xl max-sm:text-lg text-accent-content">
               siwarastore@gmail.com
+            </span>
+          </li>
+          <li>
+          <FaRegClock className="text-2xl max-sm:text-lg text-accent-content" />
+
+            <span className="text-2xl max-sm:text-lg text-accent-content">
+              11:30-21:00
             </span>
           </li>
         </ul>

@@ -61,16 +61,7 @@ export const shopLoader = async ({ request }) => {
     return string;
 }
 
-
-
-  // set params in get apis
-  // let parameter = (`?_start=${(filterObj.current_page - 1) * 12}&_limit=12`) + // pre defined that limit of response is 12 & page number count 1
-  //   (filterObj.category !== 'all' ? `&category=${filterObj.category}` : "") +
-  //   ((filterObj.search != '') ? `&q=${encodeURIComponent(filterObj.search)}` : ``) +
-  //   (filterObj.order ? `&_sort=price.current.value` : "") + // Check if the order exists, then sort it in ascending order. After that, the API response will be modified if descending order or any other filter is selected.
-  //   (filterObj.in_stock ? (`&isInStock`) : '') +
-  //   (filterObj.price !== 'all' ? `&price.current.value_lte=${filterObj.price}` : ``) 
-  try {
+try {
     const url = buildUrl(filterObj.category, filterObj.order, filterObj.price, filterObj.in_stock)
     console.log(url);
     const response = await axios.get(
@@ -101,7 +92,7 @@ const Shop = () => {
       <div className="max-w-7xl mx-auto mt-5">
         <Filters />
         {productLoaderData.productsData.length === 0 && <h2 className="text-accent-content text-center text-4xl my-10">No products found for this filter</h2>}
-        <div className="grid grid-cols-4 px-2 gap-y-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 shop-products-grid">
+        <div className="selected-products-grid max-w-7xl mx-auto">
           {productLoaderData.productsData.length !== 0 &&
             productLoaderData.productsData.map((product) => (
               <ProductElement
