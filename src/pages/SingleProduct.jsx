@@ -39,7 +39,7 @@ const SingleProduct = () => {
       );
       const data = getResponse.data;
       console.log(getResponse);
-      
+
       // Check if the product is in the wishlist
       const isInWishlist = data.findIndex((item) => item.id === productData?._id) !== -1;
       setProduct({
@@ -139,7 +139,7 @@ const SingleProduct = () => {
           </div>
           <div className="flex flex-row gap-x-2 max-sm:flex-col max-sm:gap-x">
             <button
-              className="btn bg-blue-600 hover:bg-blue-500 text-white"
+              className={`btn bg-blue-600 hover:bg-blue-500 text-white ${!productData?.isInStock ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={() => {
                 if (loginState) {
                   dispatch(addToCart(product));
@@ -149,10 +149,22 @@ const SingleProduct = () => {
                   );
                 }
               }}
+              disabled={!productData?.isInStock}
             >
-              <FaCartShopping className="text-xl mr-1" />
-              Add to cart
+              {!productData?.isInStock ? (
+                <>
+                  <FaCartShopping className="text-xl mr-1" />
+                  Out of stock
+                </>
+              ) : (
+                <>
+                  <FaCartShopping className="text-xl mr-1" />
+                  Add to cart
+                </>
+              )}
             </button>
+
+
 
             {product?.isInWishList ? (
               <button
@@ -198,7 +210,7 @@ const SingleProduct = () => {
             >
               In Stock: {productData?.isInStock ? "Yes" : "No"}
             </div>
-            
+
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
               Category: {productData?.category}
             </div>
