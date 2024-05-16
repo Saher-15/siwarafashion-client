@@ -19,7 +19,7 @@ const ThankYou = () => {
       const userData = localStorage.getItem("user_Data");
       console.log(userData);
       const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/order/new_order/${localStorage.getItem("id")}`,{ 
-        subtotal: total,
+        subtotal: total*0.9,
         cartItems: cartItems,
       });
 
@@ -35,18 +35,6 @@ const ThankYou = () => {
       toast.error("Failed to create order");
     }
   };
-
-  // const saveOrderToHistory = async (orderId) => {
-  //   try {
-  //     const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/get_orders`, {
-  //       userId: localStorage.getItem("id"),
-  //       orderId: orderId,
-  //     });
-  //     console.log("Order saved to history:", response.data);
-  //   } catch (err) {
-  //     console.error("Error saving order to history:", err);
-  //   }
-  // };
 
   useEffect(() => {
     if (!loginState) {

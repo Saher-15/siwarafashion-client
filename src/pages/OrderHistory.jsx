@@ -13,17 +13,12 @@ export const orderHistoryLoader = async () => {
   return { orderHistory: response.data };
 };
 
-
-
-
 const OrderHistory = () => {
   const { orderHistory } = useLoaderData();
   // cancelled, in progress, delivered
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const [orders, setOrders] = useState(orderHistory);
-
-
 
   useEffect(() => {
     if (!loginState) {
@@ -42,7 +37,7 @@ const OrderHistory = () => {
               There are no orders in the order history
             </h1>
             <Link
-              to="/shop"
+              to="/shop?price=10000&stock=true"
               className="btn bg-blue-600 hover:bg-blue-500 text-white mt-10"
             >
               Make your first order
@@ -57,7 +52,7 @@ const OrderHistory = () => {
               >
                 <input type="radio" name="my-accordion-3" />
                 <div className="collapse-title text-xl font-medium text-accent-content">
-                  Order {order.id} - {order.orderStatus}
+                  Order {order._id} - {order.orderStatus}
                 </div>
                 <div className="collapse-content">
                   <div className="overflow-x-auto">
@@ -79,27 +74,26 @@ const OrderHistory = () => {
                             <th><img src={`${product.imageUrl}`} alt="" className="w-10" /></th>
                             <td>{product.name}</td>
                             <td>{product.selectedSize}</td>
-                            <td>₪{(product.price).toFixed(2)}</td>
-                          </tr>
+                            <td>₪{(product.price).toFixed(2)}</td>                          </tr>
                         ))}
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4 className="text-md text-accent-content">
-                              Subtotal: ₪{ Math.round(order?.subtotal) }
+                              Subtotal: ₪{Math.round(order?.subtotal) / 0.9}
                             </h4>
                           </td>
                         </tr>
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h3 className="text-md text-accent-content">
-                              Shipping: ₪35
+                              10% discount
                             </h3>
                           </td>
                         </tr>
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h3 className="text-xl text-accent-content">
-                              - Order Total: ₪{ Math.round(order?.subtotal + 35) } -
+                              - Order Total: ₪{Math.round(order?.subtotal)} -
                             </h3>
                           </td>
                         </tr>
