@@ -33,7 +33,7 @@ const CartTotals = () => {
           <label htmlFor='shippingSelect'>Shipping Area:</label>
           <select id='shippingSelect' onChange={handleShippingChange}>
             <option value='pickUpFromStore'>Pick up from store</option>
-            <option value='nazareth'>Nazareth area</option>
+            <option value='nazareth'>Other area</option>
             <option value='jerusalim'>Jerusalim area and West bank</option>
           </select>
           <p className='subtotal-text'>
