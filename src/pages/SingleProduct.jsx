@@ -22,10 +22,11 @@ export const singleProductLoader = async ({ params }) => {
 
 const SingleProduct = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [size, setSize] = useState(0);
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const { productData } = useLoaderData();
+  const [size, setSize] = useState(productData.availableSizes[0]);
+
   const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
@@ -60,12 +61,15 @@ const SingleProduct = () => {
     isInWishList: false
   });
 
+  
   useEffect(() => {
     setProduct((prevProduct) => ({
       ...prevProduct,
       selectedSize: size
     }));
   }, [size]);
+
+
 
   const addToWishlistHandler = async () => {
     try {
@@ -152,6 +156,7 @@ const SingleProduct = () => {
           </div>
           <div className="text-2xl">
             <SelectSize
+
               sizeList={productData?.availableSizes}
               size={size}
               setSize={setSize}
