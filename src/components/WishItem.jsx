@@ -17,7 +17,10 @@ const WishItem = ({ item, counter, removeFromWishlist }) => {
     <tr className="hover cursor-pointer">
       <th className="text-accent-content">{counter + 1}</th>
       <td className="text-accent-content">{item.name}</td>
-      <td className="text-accent-content">{item.selectedSize}</td>
+      <td className="text-accent-content">
+        <img src={item.imageUrl} alt="Image description" width="50" height="50" />
+      </td>
+
       <td>
         <button className="btn btn-xs btn-error text-sm" onClick={removeFromWishlistHandler}>
           <FaHeartCrack />
