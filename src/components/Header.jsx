@@ -21,6 +21,7 @@ const Header = () => {
   // const { amount } = useSelector((state) => state.cart);
   const { total } = useSelector((state) => state.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [id, setId] = useState(localStorage.getItem("id"));
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.auth);
@@ -35,6 +36,12 @@ const Header = () => {
 
   }, [loginState]);
 
+  const handleLogout = () => {
+    // Clear local storage or any other logout operations
+    localStorage.removeItem("id");
+    dispatch(logout());
+  };
+  
   return (
     <>
       <div className="topbar border-b border-gray-800">
@@ -71,19 +78,19 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex-none">
+          <button
+            className="text-accent-content btn btn-ghost btn-circle text-xl"
+            onClick={() => dispatch(changeMode())}
+          >
+            {darkMode ? <FaSun /> : <FaMoon />}
+          </button>
+          <Link
+            to="/wishlist"
+            className="btn btn-ghost btn-circle text-accent-content "
+          >
+            <FaHeart className="text-xl" />
+          </Link>
           <div className="dropdown dropdown-end">
-            <button
-              className="text-accent-content btn btn-ghost btn-circle text-xl"
-              onClick={() => dispatch(changeMode())}
-            >
-              {darkMode ? <FaSun /> : <FaMoon />}
-            </button>
-            <Link
-              to="/wishlist"
-              className="btn btn-ghost btn-circle text-accent-content "
-            >
-              <FaHeart className="text-xl" />
-            </Link>
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
@@ -107,9 +114,6 @@ const Header = () => {
               className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
-                {/* <span className="font-bold text-lg text-accent-content">
-                  {amount} Items
-                </span> */}
                 <span className="text-info text-accent-content">
                   Subtotal: ₪{total.toFixed(2)}
                 </span>
@@ -149,9 +153,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/login" className="text-accent-content">
-                    Logout
-                  </Link>
+                <Link to="/" onClick={handleLogout} className="text-accent-content">Logout</Link>
                 </li>
               </ul>
             </div>
@@ -164,7 +166,6 @@ const Header = () => {
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
 
-            {/* Page content here */}
             <label htmlFor="my-drawer" className="btn drawer-button">
               <HiMiniBars3BottomLeft className="text-4xl" />
             </label>

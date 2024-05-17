@@ -29,7 +29,6 @@ const SingleProduct = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    // Check if the product is in the wishlist when component mounts
     isProductInWishlist();
   }, []);
 
@@ -57,9 +56,16 @@ const SingleProduct = () => {
     name: productData?.name,
     imageUrl: productData?.imageUrl,
     price: productData?.price,
-    selectedSize: size || productData?.availableSizes[0],
+    selectedSize: size,
     isInWishList: false
   });
+
+  useEffect(() => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      selectedSize: size
+    }));
+  }, [size]);
 
   const addToWishlistHandler = async () => {
     try {
