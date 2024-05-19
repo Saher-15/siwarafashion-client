@@ -58,9 +58,9 @@ export const shopLoader = async ({ request }) => {
       string = `&max_price=${max_price}&is_in_stock=${is_in_stock}&category=${category}&sort_by=${updatedSortBy}`;
     }
     return string;
-}
+  }
 
-try {
+  try {
     const url = buildUrl(filterObj.category, filterObj.order, filterObj.price, filterObj.in_stock)
     console.log(url);
     const response = await axios.get(
@@ -99,8 +99,21 @@ const Shop = () => {
                 id={product._id}
                 title={product.name}
                 image={product.imageUrl}
-                price={product.price}
+                price={
+                  product.discount < 1 ? (
+                    <>
+                      <span style={{ textDecoration: 'line-through' }}>
+                        ${product.price.toFixed(2)}
+                      </span>
+                      &nbsp;
+                      <span>${(product.price * product.discount).toFixed(2)}</span>
+                    </>
+                  ) : (
+                    `$${product.price.toFixed(2)}`
+                  )
+                }
               />
+
             ))}
         </div>
       </div>
