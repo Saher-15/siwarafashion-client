@@ -57,11 +57,12 @@ const SingleProduct = () => {
     name: productData?.name,
     imageUrl: productData?.imageUrl,
     price: productData?.price,
+    discount: productData?.discount,
     selectedSize: size,
     isInWishList: false
   });
 
-  
+
   useEffect(() => {
     setProduct((prevProduct) => ({
       ...prevProduct,
@@ -115,6 +116,7 @@ const SingleProduct = () => {
       if (isInCart) {
         dispatch(removeItem(product.id));
       } else {
+        product.price *= product.discount;
         dispatch(addToCart(product));
       }
     } else {
@@ -148,9 +150,16 @@ const SingleProduct = () => {
           <h2 className="text-5xl max-sm:text-3xl text-accent-content">
             {productData?.name}
           </h2>
-          <p className="text-3xl text-error">
+          <p
+            className={`text-3xl ${productData?.discount < 1 ? 'line-through' : ''} text-error`}
+          >
             ₪{productData?.price}
           </p>
+          {productData?.discount < 1 && (
+            <p className="text-3xl text-error">
+              ₪{productData?.discount * productData?.price.toFixed(2)}
+            </p>
+          )}
           <div className="text-xl max-sm:text-lg text-accent-content">
             {parse(productData?.description)}
           </div>

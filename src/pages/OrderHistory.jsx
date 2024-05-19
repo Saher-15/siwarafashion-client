@@ -79,21 +79,21 @@ const OrderHistory = () => {
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4 className="text-md text-accent-content">
-                              Subtotal: ₪{Math.round(order?.subtotal) / 0.9}
+                              Subtotal: ₪{Math.round(order?.subtotal)}
                             </h4>
                           </td>
                         </tr>
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h3 className="text-md text-accent-content">
-                              10% discount
+                              Shipping ₪{order?.shippingCost}
                             </h3>
                           </td>
                         </tr>
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h3 className="text-xl text-accent-content">
-                              - Order Total: ₪{Math.round(order?.subtotal)} -
+                              - Order Total: ₪{Math.round(order?.subtotal + order?.shippingCost)} -
                             </h3>
                           </td>
                         </tr>

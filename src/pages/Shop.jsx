@@ -30,7 +30,6 @@ export const shopLoader = async ({ request }) => {
   const itemsPerPage = 12;
 
   function buildUrl(category, sort_by, max_price, is_in_stock) {
-    console.log(max_price, is_in_stock);
     let string;
     let updatedSortBy = sort_by; // Create a new variable to store the updated sort_by value
     if (sort_by === 'high to low') {

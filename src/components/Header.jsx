@@ -39,9 +39,10 @@ const Header = () => {
   const handleLogout = () => {
     // Clear local storage or any other logout operations
     localStorage.removeItem("id");
+    localStorage.removeItem("user_Data");
     dispatch(logout());
   };
-  
+
   return (
     <>
       <div className="topbar border-b border-gray-800">
@@ -153,7 +154,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                <Link to="/" onClick={handleLogout} className="text-accent-content">Logout</Link>
+                  <Link to="/" onClick={handleLogout} className="text-accent-content">Logout</Link>
                 </li>
               </ul>
             </div>

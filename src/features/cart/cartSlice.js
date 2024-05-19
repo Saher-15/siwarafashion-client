@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 const initialState = {
   cartItems: [],
   amount: 0,
+  shipping: 0,
   total: 0,
   isLoading: true,
 };
@@ -27,7 +28,7 @@ const cartSlice = createSlice({
     calculateTotals: (state) => {
       let total = 0;
       state.cartItems.forEach(item => {
-        total += item.price * item.amount;
+        total += item.price;
       });
       state.total = total;
     },
@@ -40,12 +41,15 @@ const cartSlice = createSlice({
       }
       cartSlice.caseReducers.calculateTotals(state);
       toast.success('Product added to the cart!');
+    },
+    setShipping: (state, action) => {
+      state.shipping = action.payload;
     }
   }
 });
 
 // Export actions
-export const { clearCart, removeItem, updateCartAmount, calculateTotals, addToCart } = cartSlice.actions;
+export const { clearCart, removeItem, updateCartAmount, calculateTotals, addToCart, setShipping } = cartSlice.actions;
 
 // Export reducer
 export default cartSlice.reducer;

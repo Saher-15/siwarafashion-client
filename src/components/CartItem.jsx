@@ -3,7 +3,7 @@ import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
 
 
 const CartItem = ({ cartItem }) => {
-  const { id, name, price, imageUrl, amount, selectedSize } =
+  const { id, name, price, discount, imageUrl, amount, selectedSize } =
     cartItem;
 
   const dispatch = useDispatch();

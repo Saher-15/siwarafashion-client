@@ -6,19 +6,23 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { calculateTotals, clearCart } from "../features/cart/cartSlice";
 import { store } from "../store";
+import { useLocation } from 'react-router-dom';
 
 const ThankYou = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const loginState = useSelector((state) => state.auth.isLoggedIn);
-  const { total } = useSelector((state) => state.cart);
+  const { total, shipping } = useSelector((state) => state.cart);
+  const location = useLocation();
+  // const { shipping } = location.state || { shipping: 0 }; // Provide default value to avoid errors
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const createNewOrder = async () => {
     try {
       const userData = localStorage.getItem("user_Data");
-      console.log(userData);
       const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/order/new_order/${localStorage.getItem("id")}`,{ 
+        shippingCost: shipping,
         subtotal: total*0.9,
         cartItems: cartItems,
       });
