@@ -41,7 +41,7 @@ const Landing = () => {
                         {product.price}
                       </span>
                       &nbsp;
-                      <span>{(product.price * product.discount)}</span>
+                      <span className="text-3xl text-error">₪{(product.price * product.discount)}</span>
                     </>
                   ) : (
                     `${product.price}`

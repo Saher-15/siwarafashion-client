@@ -151,13 +151,13 @@ const SingleProduct = () => {
             {productData?.name}
           </h2>
           <p
-            className={`text-3xl ${productData?.discount < 1 ? 'line-through' : ''} text-error`}
+            className={`text-3xl ${productData?.discount < 1 ? 'line-through' : ''} `}
           >
             ₪{productData?.price}
           </p>
           {productData?.discount < 1 && (
             <p className="text-3xl text-error">
-              ₪{productData?.discount * productData?.price.toFixed(2)}
+              ₪{productData?.discount * productData?.price}
             </p>
           )}
           <div className="text-xl max-sm:text-lg text-accent-content">

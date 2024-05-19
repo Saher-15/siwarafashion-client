@@ -102,11 +102,11 @@ const Shop = () => {
                 price={
                   product.discount < 1 ? (
                     <>
-                      <span style={{ textDecoration: 'line-through' }}>
+                      <span style={{ textDecoration: 'line-through' }} >
                         {product.price}
                       </span>
                       &nbsp;
-                      <span>{(product.price * product.discount)}</span>
+                      <span className="text-3xl text-error">₪{(product.price * product.discount)}</span>
                     </>
                   ) : (
                     `${product.price}`
