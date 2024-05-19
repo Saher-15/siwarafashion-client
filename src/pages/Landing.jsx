@@ -30,12 +30,24 @@ const Landing = () => {
         <div className="selected-products-grid max-w-7xl mx-auto">
           {products.map((product) => (
             <ProductElement
-              key={product._id}
-              id={product._id}
-              title={product.name}
-              image={product.imageUrl}
-              price={product.price}
-            />
+                key={product._id}
+                id={product._id}
+                title={product.name}
+                image={product.imageUrl}
+                price={
+                  product.discount < 1 ? (
+                    <>
+                      <span style={{ textDecoration: 'line-through' }}>
+                        {product.price}
+                      </span>
+                      &nbsp;
+                      <span>{(product.price * product.discount)}</span>
+                    </>
+                  ) : (
+                    `${product.price}`
+                  )
+                }
+              />
           ))}
         </div>
       </div>
