@@ -103,10 +103,10 @@ const Shop = () => {
                   product.discount < 1 ? (
                     <>
                       <span style={{ textDecoration: 'line-through' }}>
-                        ${product.price.toFixed(2)}
+                        {product.price.toFixed(2)}
                       </span>
                       &nbsp;
-                      <span>${(product.price * product.discount).toFixed(2)}</span>
+                      <span>{(product.price * product.discount).toFixed(2)}</span>
                     </>
                   ) : (
                     `$${product.price.toFixed(2)}`
