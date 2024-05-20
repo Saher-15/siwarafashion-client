@@ -60,10 +60,16 @@ const ThankYou = () => {
           Thank you for your purchase!
         </h2>
 
-        <h3 className="text-2xl mt-10 max-sm:text-xl">
+        {/* <h3 className="text-2xl mt-10 max-sm:text-xl">
           We hope you love your new clothes! We appreciate your
           business and look forward to seeing you again soon.
-        </h3>
+        </h3> */}
+        {/* <h3 className="text-xl mt-5 max-sm:text-lg">
+          Thank you for your purchase!
+        </h3> */}
+        {/* <h3 className="text-xl max-sm:text-lg">
+          Sincerely, SiwaraFashion team
+        </h3> */}
         <h3 className="text-2xl mt-5 max-sm:text-xl">
           Here are some things you can do next:
         </h3>
@@ -76,12 +82,12 @@ const ThankYou = () => {
           </li>
         </ul>
 
-        <h4 className="text-xl mt-5 max-sm:text-lg">
-          Thank you again for your purchase!
+        {/* <h4 className="text-xl mt-5 max-sm:text-lg">
+          Thank you for your purchase!
         </h4>
         <h4 className="text-xl max-sm:text-lg">
           Sincerely, SiwaraFashion team
-        </h4>
+        </h4> */}
       </div>
     </>
   );

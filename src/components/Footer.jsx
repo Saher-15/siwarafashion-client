@@ -7,12 +7,15 @@ import { useSelector } from "react-redux";
 const Footer = () => {
 
   const handleClickInsta = () => {
-    window.location.href = 'https://www.instagram.com/siwarafashion?igsh=bnpvOGo0aWkybHly';
+    window.open('https://www.instagram.com/siwarafashion?igsh=bnpvOGo0aWkybHly', '_blank');
   };
+
   const handleClickMap = () => {
-    window.location.href = 'https://l.instagram.com/?u=https%3A%2F%2Fmaps.google.com%2F%3Fq%3D32.699356%252C35.300732&e=AT15GcPA6PxvRnYeTXi1SDFBSCQWFlrPNcmPVBZI0eQnSf8cWuKqn4vFF6kOlmhClN5HAKxtIVuJ_jFFajpzfhG-QN3NFtOaZmF43YEqWq2wR4RDSLJkzA';
+    window.open('https://l.instagram.com/?u=https%3A%2F%2Fmaps.google.com%2F%3Fq%3D32.699356%252C35.300732&e=AT15GcPA6PxvRnYeTXi1SDFBSCQWFlrPNcmPVBZI0eQnSf8cWuKqn4vFF6kOlmhClN5HAKxtIVuJ_jFFajpzfhG-QN3NFtOaZmF43YEqWq2wR4RDSLJkzA', '_blank');
   };
+
   const loginState = useSelector((state) => state.auth.isLoggedIn);
+
   return (
     <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded mt-10 max-md:px-0">
       <nav className="grid grid-flow-col max-sm:grid-flow-row gap-4">
@@ -22,13 +25,9 @@ const Footer = () => {
         <Link to="/shop?stock=true" className="link link-hover text-2xl max-md:text-xl text-accent-content">
           Shop
         </Link>
-
         <Link to="/about" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           About us
         </Link>
-        {/* <Link to="/contact" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
-          Contact
-        </Link> */}
         {!loginState && (
           <>
             <Link
