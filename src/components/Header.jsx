@@ -63,9 +63,10 @@ const Header = () => {
             <FaRegClock className="text-2xl max-sm:text-lg text-accent-content" />
 
             <span className="text-2xl max-sm:text-lg text-accent-content">
-              11:30-21:00
+              11:30-21:00 / Monday-Saturday
             </span>
           </li>
+          
         </ul>
       </div>
       <div className="navbar bg-base-100 max-w-7xl mx-auto">
@@ -83,14 +84,17 @@ const Header = () => {
             className="text-accent-content btn btn-ghost btn-circle text-xl"
             onClick={() => dispatch(changeMode())}
           >
-            {darkMode ? <FaSun /> : <FaMoon />}
+            {darkMode ? <FaMoon /> : <FaSun />}
           </button>
+          {isLoggedIn && (
           <Link
             to="/wishlist"
             className="btn btn-ghost btn-circle text-accent-content "
           >
+          
             <FaHeart className="text-xl" />
           </Link>
+          )}
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
@@ -130,6 +134,7 @@ const Header = () => {
             </div>
           </div>
           {isLoggedIn && (
+            
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div>
