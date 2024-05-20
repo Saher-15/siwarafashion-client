@@ -18,7 +18,7 @@ const Filters = () => {
     "Vests",
     "Belts",
     "Dress",
-    "Scarts",
+    "Scirts",
     "Pants",
     "Blouses",
     "Suits",
