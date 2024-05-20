@@ -9,7 +9,7 @@ const Filters = () => {
   const [selectCategoryList, setSelectCategoryList] = useState([
     "all",
     "Shoes",
-    "T-Shirt",
+    "T-Shirts",
     "Jackets",
     "Shorts",
     "Sweaters",
@@ -22,7 +22,8 @@ const Filters = () => {
     "Pants",
     "Blouses",
     "Suits",
-    "Overalls"
+    "Overalls",
+    "Blazers"
   ]);
 
   return (
