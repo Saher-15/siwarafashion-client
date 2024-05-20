@@ -68,7 +68,7 @@ const Filters = () => {
       >
         search
       </button>
-      <Link to="/stock=true" className="btn btn-primary btn-sm">
+      <Link to="/shop?stock=true" className="btn btn-primary btn-sm">
         reset
       </Link>
     </Form>
