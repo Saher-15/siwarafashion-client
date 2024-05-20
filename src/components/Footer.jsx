@@ -19,7 +19,7 @@ const Footer = () => {
         <Link to="/" className="link link-hover text-2xl max-md:text-xl text-accent-content" onClick={() => window.scrollTo(0, 0)}>
           Home
         </Link>
-        <Link to="/shop?price=10000&stock=true" className="link link-hover text-2xl max-md:text-xl text-accent-content">
+        <Link to="/shop?stock=true" className="link link-hover text-2xl max-md:text-xl text-accent-content">
           Shop
         </Link>
 

@@ -189,7 +189,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="text-xl">
-                <NavLink className="text-accent-content" to="/shop?price=10000&stock=true">
+                <NavLink className="text-accent-content" to="/shop?stock=true">
                   Shop
                 </NavLink>
 
@@ -226,7 +226,7 @@ const Header = () => {
           <NavLink className="text-accent-content" to="/">
             Home
           </NavLink>
-          <NavLink className="text-accent-content" to="/shop?price=10000&stock=true">
+          <NavLink className="text-accent-content" to="/shop?stock=true">
             Shop
           </NavLink>
           <NavLink className="text-accent-content" to="/about-us">

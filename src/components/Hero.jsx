@@ -9,7 +9,7 @@ const Hero = () => {
           <p className="py-6 text-2xl max-md:text-lg text-accent-content">
             Take advantage of our website sale and enjoy a 10% discount on your payment
           </p>
-          <Link to="/shop?price=10000&stock=true" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white">Shop Now</Link>
+          <Link to="/shop?stock=true" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white">Shop Now</Link>
         </div>
       </div>
     </div>

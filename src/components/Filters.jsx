@@ -15,6 +15,7 @@ const Filters = () => {
     "Sweaters",
     "Shirts",
     "Jeans",
+    "Vests",
     "Belts",
     "Dress",
     "Scarts",
@@ -67,7 +68,7 @@ const Filters = () => {
       >
         search
       </button>
-      <Link to="/shop?price=10000&stock=true" className="btn btn-primary btn-sm">
+      <Link to="/stock=true" className="btn btn-primary btn-sm">
         reset
       </Link>
     </Form>
