@@ -13,7 +13,8 @@ import {
   Profile,
   ChangePassword,
   ThankYou,
-  OrderHistory
+  OrderHistory,
+  CheckOut
 } from "./pages";
 import { landingLoader } from "./pages/Landing";
 import { singleProductLoader } from "./pages/SingleProduct";
@@ -55,8 +56,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "contact",
-        element: <Contact />,
+        path: "check-out",
+        element: <CheckOut />,
       },
       {
         path: "about-us",

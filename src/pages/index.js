@@ -12,3 +12,4 @@ export { default as Profile } from "./Profile";
 export { default as ThankYou } from "./ThankYou";
 export { default as OrderHistory } from "./OrderHistory";
 export { default as ChangePassword } from "./ChangePassword";
+export { default as CheckOut } from "./CheckOut";

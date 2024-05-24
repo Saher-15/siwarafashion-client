@@ -32,14 +32,6 @@ const CartTotals = () => {
           <span>Total after 10% discount</span>
           <span className='font-medium'>₪{Math.round(total * 0.9)}</span>
         </p>
-        {/* SHIPPING */}
-
-        <label htmlFor='shippingSelect'>Shipping Area:</label>
-        <select id='shippingSelect' onChange={handleShippingChange}>
-          <option value='pickUpFromStore'>Pick up from store</option>
-          <option value='nazareth'>Other area</option>
-          <option value='jerusalim'>Jerusalim area and West bank</option>
-        </select>
         <p className='subtotal-text'>
           <span>Shipping</span>
           <span className='font-medium'>₪{shipping}</span>

@@ -62,13 +62,11 @@ export const shopLoader = async ({ request }) => {
 
   try {
     const url = buildUrl(filterObj.category, filterObj.order, filterObj.price, filterObj.in_stock)
-    console.log(url);
     const response = await axios.get(
       `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/getNProducts?page=${filterObj.current_page}&size=${itemsPerPage}${url}`
 
     );
     let data = response.data.data;
-    console.log(data);
     // sorting in descending order
     // if (filterObj.order && !(filterObj.order === "none" || filterObj.order === "price low")) data.sort((a, b) => b.price - a.price)
     return { productsData: data, productsLength: data.length, page: filterObj.current_page };

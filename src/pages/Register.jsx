@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SectionTitle } from "../components";
-import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -23,16 +22,16 @@ const Register = () => {
 
     if (firstName.length === 0) {
       isProceed = false;
-      errorMessage = "Please enter the value in username field";
+      errorMessage = "Please enter the value in the username field";
     } else if (lastName.length === 0) {
       isProceed = false;
-      errorMessage = "Please enter the value in lastname field";
+      errorMessage = "Please enter the value in the lastname field";
     } else if (email.length === 0) {
       isProceed = false;
-      errorMessage = "Please enter the value in email field";
-    } else if (phone.length < 4) {
+      errorMessage = "Please enter the value in the email field";
+    } else if (phone.length !== 10) {
       isProceed = false;
-      errorMessage = "Phone must be longer than 3 characters";
+      errorMessage = "Phone number must be exactly 10 digits";
     } else if (city.length < 3) {
       isProceed = false;
       errorMessage = "City must be longer than 2 characters";
@@ -56,7 +55,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let regObj = {
       firstName,
       lastName,
@@ -66,14 +65,17 @@ const Register = () => {
       street,
       password,
     };
-  
+
     if (isValidate()) {
       try {
-        const registrationResponse = await axios.post("https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register", regObj);
-  
+        const registrationResponse = await axios.post(
+          "https://siwarafashion-server-59dda37c29fa.herokuapp.com/auth/register",
+          regObj
+        );
+
         console.log(registrationResponse.data);
         // Handle different response scenarios
-        if (registrationResponse.data.error === 'Email is taken') {
+        if (registrationResponse.data.error === "Email is taken") {
           // If email is already taken, show error message
           toast.error("Email is already taken");
         } else {
@@ -87,7 +89,14 @@ const Register = () => {
       }
     }
   };
-  
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    if (value.length <= 10) {
+      setPhone(value);
+    }
+  };
+
   return (
     <>
       <SectionTitle title="Register" path="Home | Register" />
@@ -106,7 +115,7 @@ const Register = () => {
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">
-                Lastname
+                Last name
               </label>
               <input
                 type="text"
@@ -116,15 +125,16 @@ const Register = () => {
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">
-                E-mail
+                Email
               </label>
               <input
                 type="email"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value.toLowerCase())}
                 required={true}
               />
+
               <label className="font-semibold text-sm pb-1 block text-accent-content">
                 Phone
               </label>
@@ -132,7 +142,7 @@ const Register = () => {
                 type="tel"
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={handlePhoneChange}
                 required={true}
               />
               <label className="font-semibold text-sm pb-1 block text-accent-content">
