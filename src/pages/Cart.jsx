@@ -44,42 +44,43 @@ const Cart = () => {
         </div>
         <div className='lg:col-span-4 lg:pl-4'>
           <CartTotals />
-          <div className="mt-8">
-            <div className="mb-4">
+
+          <div className='card cart-totals-card'>
+            <div className='card-body'>
               <h2 className="text-lg font-semibold">Delivery Options</h2>
-            </div>
-            <div className="mb-4">
-              <input
-                type="radio"
-                id="pickup"
-                name="deliveryOption"
-                value="pickup"
-                onChange={handleDeliveryOptionChange}
-              />
-              <label htmlFor="pickup" className="ml-2">Pick up from store</label>
-            </div>
-            <div className="mb-4">
-              <input
-                type="radio"
-                id="jerusalem"
-                name="deliveryOption"
-                value="jerusalem"
-                onChange={handleDeliveryOptionChange}
-              />
-              <label htmlFor="jerusalem" className="ml-2">Shipping to Jerusalem +50</label>
-            </div>
-            <div className="mb-4">
-              <input
-                type="radio"
-                id="other_area"
-                name="deliveryOption"
-                value="other_area"
-                onChange={handleDeliveryOptionChange}
-              />
-              <label htmlFor="other_area" className="ml-2">Shipping to other area +35</label>
+
+              <div className="mb-4">
+                <input
+                  type="radio"
+                  id="pickup"
+                  name="deliveryOption"
+                  value="pickup"
+                  onChange={handleDeliveryOptionChange}
+                />
+                <label htmlFor="pickup" className="ml-2">Pick up from store</label>
+              </div>
+              <div className="mb-4">
+                <input
+                  type="radio"
+                  id="jerusalem"
+                  name="deliveryOption"
+                  value="jerusalem"
+                  onChange={handleDeliveryOptionChange}
+                />
+                <label htmlFor="jerusalem" className="ml-2">Shipping to Jerusalem +50</label>
+              </div>
+              <div className="mb-4">
+                <input
+                  type="radio"
+                  id="other_area"
+                  name="deliveryOption"
+                  value="other_area"
+                  onChange={handleDeliveryOptionChange}
+                />
+                <label htmlFor="other_area" className="ml-2">Shipping to other area +35</label>
+              </div>
             </div>
           </div>
-          
           {loginState ? (
             <button onClick={isCartEmpty} className='btn bg-blue-600 hover:bg-blue-500 text-white btn-block mt-8'>
               Order Now

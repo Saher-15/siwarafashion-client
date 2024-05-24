@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-router-dom";
 import { SectionTitle } from "../components";
 import { useDispatch, useSelector } from "react-redux";
-
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOut = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // React Router's navigate hook
     const { total, shipping } = useSelector((state) => state.cart);
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        confirmEmail: '',
+        phoneNumber: '',
+        city: '',
+        street: ''
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { firstName, lastName, email, confirmEmail, phoneNumber, city, street } = formData;
+        if (!firstName || !lastName || !email || !confirmEmail || !phoneNumber || !city || !street) {
+            toast.error("Please fill in all fields");
+            return;
+        }
+        if (formData.email !== formData.confirmEmail) {
+            setErrors({ confirmEmail: 'Emails do not match' });
+            toast.error("Emails do not match");
+        } else {
+            // Proceed with form submission
+            setErrors({});
+            // Navigate to Thank You page
+            navigate("/thank-you");
+        }
+    };
 
     return (
         <>
@@ -15,12 +55,13 @@ const CheckOut = () => {
                 <Form
                     action="#"
                     method="POST"
+                    onSubmit={handleSubmit}
                     className="mx-auto mt-16 max-w-xl sm:mt-20"
                 >
                     <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                         <div>
                             <label
-                                htmlFor="first-name"
+                                htmlFor="firstName"
                                 className="block text-sm font-semibold leading-6 text-accent-content"
                             >
                                 First name
@@ -28,16 +69,18 @@ const CheckOut = () => {
                             <div className="mt-2.5">
                                 <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
+                                    name="firstName"
+                                    id="firstName"
                                     autoComplete="given-name"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
                         <div>
                             <label
-                                htmlFor="last-name"
+                                htmlFor="lastName"
                                 className="block text-sm font-semibold leading-6 text-accent-content"
                             >
                                 Last name
@@ -45,9 +88,11 @@ const CheckOut = () => {
                             <div className="mt-2.5">
                                 <input
                                     type="text"
-                                    name="last-name"
-                                    id="last-name"
+                                    name="lastName"
+                                    id="lastName"
                                     autoComplete="family-name"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -65,13 +110,15 @@ const CheckOut = () => {
                                     name="email"
                                     id="email"
                                     autoComplete="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
                         <div className="sm:col-span-2">
                             <label
-                                htmlFor="confirmation-email"
+                                htmlFor="confirmEmail"
                                 className="block text-sm font-semibold leading-6 text-accent-content"
                             >
                                 Confirmation email
@@ -79,15 +126,20 @@ const CheckOut = () => {
                             <div className="mt-2.5">
                                 <input
                                     type="email"
-                                    name="confirmation-email"
-                                    id="confirmation-email"
+                                    name="confirmEmail"
+                                    id="confirmEmail"
+                                    value={formData.confirmEmail}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
+                                {errors.confirmEmail && (
+                                    <p className="mt-2 text-sm text-red-600">{errors.confirmEmail}</p>
+                                )}
                             </div>
                         </div>
                         <div className="sm:col-span-2">
                             <label
-                                htmlFor="phone-number"
+                                htmlFor="phoneNumber"
                                 className="block text-sm font-semibold leading-6 text-accent-content"
                             >
                                 Phone number
@@ -95,9 +147,11 @@ const CheckOut = () => {
                             <div className="relative mt-2.5">
                                 <input
                                     type="tel"
-                                    name="phone-number"
-                                    id="phone-number"
+                                    name="phoneNumber"
+                                    id="phoneNumber"
                                     autoComplete="tel"
+                                    value={formData.phoneNumber}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -115,6 +169,8 @@ const CheckOut = () => {
                                     name="city"
                                     id="city"
                                     autoComplete="address-level2"
+                                    value={formData.city}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -132,6 +188,8 @@ const CheckOut = () => {
                                     name="street"
                                     id="street"
                                     autoComplete="address-line1"
+                                    value={formData.street}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
