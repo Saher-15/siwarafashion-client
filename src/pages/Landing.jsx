@@ -9,9 +9,7 @@ export const landingLoader = async () => {
     `https://siwarafashion-server-59dda37c29fa.herokuapp.com/product/get_trending_products`
   );
   const data = response.data;
-  console.log(response);
 
-  console.log(data);
   return { products: data };
 };
 
