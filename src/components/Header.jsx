@@ -25,13 +25,8 @@ const Header = () => {
   const [id, setId] = useState(localStorage.getItem("id"));
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.auth);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage menu open/close
 
   const loginState = useSelector((state) => state.auth.isLoggedIn);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu state
-  };
 
 
   useEffect(() => {
@@ -96,11 +91,12 @@ const Header = () => {
               to="/wishlist"
               className="btn btn-ghost btn-circle text-accent-content "
             >
+
               <FaHeart className="text-xl" />
             </Link>
           )}
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle" onClick={toggleMenu}>
+            <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -118,25 +114,27 @@ const Header = () => {
                 </svg>
               </div>
             </label>
-            {isMenuOpen && ( // Render menu content conditionally based on isMenuOpen state
-              <div className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-                <div className="card-body">
-                  <span className="text-info text-accent-content">
-                    Subtotal: ₪{total.toFixed(2)}
-                  </span>
-                  <div className="card-actions">
-                    <Link
-                      to="/cart"
-                      className="btn bg-blue-600 btn-block text-white hover:bg-blue-500 text-base-content"
-                    >
-                      View cart
-                    </Link>
-                  </div>
+            <div
+              tabIndex={0}
+              className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+            >
+              <div className="card-body">
+                <span className="text-info text-accent-content">
+                  Subtotal: ₪{total.toFixed(2)}
+                </span>
+                <div className="card-actions">
+                  <Link
+                    to="/cart"
+                    className="btn bg-blue-600 btn-block text-white hover:bg-blue-500 text-base-content"
+                  >
+                    View cart
+                  </Link>
                 </div>
               </div>
-            )}
+            </div>
           </div>
           {isLoggedIn && (
+
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div>
@@ -161,40 +159,99 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleLogout} className="text-accent-content">
-                    Logout
-                  </Link>
+                  <Link to="/" onClick={handleLogout} className="text-accent-content">Logout</Link>
                 </li>
               </ul>
             </div>
           )}
         </div>
+      </div>
 
-      <div className="container text-2xl navlinks-container">
-        <NavLink className="text-accent-content" to="/">
-          Home
-        </NavLink>
-        <NavLink className="text-accent-content" to="/shop?stock=true">
-          Shop
-        </NavLink>
-        <NavLink className="text-accent-content" to="/about-us">
-          About us
-        </NavLink>
-        {/* <NavLink className="text-accent-content" to="/contact">
+      <div className="navbar-bottom-menu border-y border-gray-800">
+        <div className="drawer">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+
+            <label htmlFor="my-drawer" className="btn drawer-button">
+              <HiMiniBars3BottomLeft className="text-4xl" />
+            </label>
+          </div>
+          <div className="drawer-side z-10">
+            <label
+              htmlFor="my-drawer"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+
+            <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content mt-4">
+              <label htmlFor="my-drawer" className="btn drawer-button">
+                <FaWindowClose className="text-3xl ml-auto" />
+              </label>
+              {/* Sidebar content here */}
+              <li className="text-xl">
+                <NavLink className="text-accent-content" to="/">
+                  Home
+                </NavLink>
+              </li>
+              <li className="text-xl">
+                <NavLink className="text-accent-content" to="/shop?stock=true">
+                  Shop
+                </NavLink>
+
+              </li>
+              <li className="text-xl">
+                <NavLink className="text-accent-content" to="/about-us">
+                  About us
+                </NavLink>
+              </li>
+              {/* <li className="text-xl">
+                <NavLink className="text-accent-content" to="/contact">
+                  Contact
+                </NavLink>
+              </li> */}
+              {!isLoggedIn && (
+                <>
+                  <li className="text-xl">
+                    <NavLink className="text-accent-content" to="/login">
+                      Login
+                    </NavLink>
+                  </li>
+                  <li className="text-xl">
+                    <NavLink className="text-accent-content" to="/register">
+                      Register
+                    </NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        </div>
+
+        <div className="container text-2xl navlinks-container">
+          <NavLink className="text-accent-content" to="/">
+            Home
+          </NavLink>
+          <NavLink className="text-accent-content" to="/shop?stock=true">
+            Shop
+          </NavLink>
+          <NavLink className="text-accent-content" to="/about-us">
+            About us
+          </NavLink>
+          {/* <NavLink className="text-accent-content" to="/contact">
             Contact
           </NavLink> */}
-        {!isLoggedIn && (
-          <>
-            <NavLink className="text-accent-content" to="/login">
-              Login
-            </NavLink>
-            <NavLink className="text-accent-content" to="/register">
-              Register
-            </NavLink>
-          </>
-        )}
+          {!isLoggedIn && (
+            <>
+              <NavLink className="text-accent-content" to="/login">
+                Login
+              </NavLink>
+              <NavLink className="text-accent-content" to="/register">
+                Register
+              </NavLink>
+            </>
+          )}
+        </div>
       </div>
-    </div >
     </>
   );
 };
