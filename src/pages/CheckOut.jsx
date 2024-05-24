@@ -44,7 +44,9 @@ const CheckOut = () => {
             // Proceed with form submission
             setErrors({});
             // Navigate to Thank You page
-            navigate("/thank-you");
+            //navigate("/thank-you");
+            navigate(`/thank-you?firstName=${formData.firstName}&lastName=${formData.lastName}&email=${formData.email}&phoneNumber=${formData.phoneNumber}&city=${formData.city}&street=${formData.street}`);
+
         }
     };
 
