@@ -20,6 +20,34 @@ const CheckOut = () => {
         street: ''
     });
 
+    function createPaymentGrowApi() {
+        const form = new FormData();
+        form.append('pageCode', '0b7a16e03b25');
+        form.append('userId', '4ec1d595ae764243');
+        form.append('apiKey', '57ce86548429');
+        form.append('sum', total * 0.9);
+        form.append('successUrl', 'https://mysite.co.il/thank.html?test=1');
+        form.append('cancelUrl', 'https://mysite.co.il');
+        form.append('description', 'רכישת בגדים אונליין');
+        form.append('pageField[fullName]', firstName + " " + lastName);
+        form.append('pageField[phone]', phoneNumber);
+        form.append('pageField[email]', email);
+
+        const options = { method: 'POST', headers: { accept: 'application/json' } };
+
+        options.body = form;
+
+        fetch('https://sandbox.meshulam.co.il/api/light/server/1.0/createPaymentProcess', options)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                console.log(response.data.url);
+
+
+            })
+            .catch(err => console.error(err));
+    }
+
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
@@ -201,6 +229,7 @@ const CheckOut = () => {
                         <button
                             type="submit"
                             className="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            onClick={createPaymentGrowApi}
                         >
                             Complete Purchase
                         </button>

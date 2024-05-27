@@ -18,57 +18,6 @@ const ThankYou = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  // const firstName = searchParams.get('firstName');
-  // const lastName = searchParams.get('lastName');
-  // const email = searchParams.get('email');
-  // const phone = searchParams.get('phoneNumber');
-  // const city = searchParams.get('city');
-  // const street = searchParams.get('street');
-
-
-
-
-
-
-
-
-  
-
-
-  const createNewOrder = async () => {
-    try {
-      const userData = localStorage.getItem("user_Data");
-      //   const requestBody = {
-      //     firstName,
-      //     lastName,
-      //     phone,
-      //     email,
-      //     street,
-      //     city
-      // };
-
-
-
-
-      
-      const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/order/new_order/${localStorage.getItem("id")}`, {
-        shippingCost: shipping,
-        subtotal: total * 0.9,
-        cartItems: cartItems,
-      });
-
-      // Save order to user's order history
-      // saveOrderToHistory(response.data._id);
-
-      // Clear cart and recalculate totals upon successful order creation
-      store.dispatch(clearCart());
-      store.dispatch(calculateTotals());
-      toast.success("Order completed");
-    } catch (err) {
-      console.error("Error creating order:", err);
-      toast.error("Failed to create order");
-    }
-  };
 
   useEffect(() => {
     if (!loginState) {
@@ -87,10 +36,10 @@ const ThankYou = () => {
       <SectionTitle title="Thank You" path="Home | Cart | Thank you" />
       <div className="thankyou-content text-center text-accent-content px-10 max-w-7xl mx-auto">
         <h2 className="text-6xl max-sm:text-4xl">
-          Thank you for your purchase!
+          Thank you for your purchase! ----- cancel
         </h2>
         <h3 className="text-2xl mt-5 max-sm:text-xl">
-          Here are some things you can do next:
+          Here are some things you can do next: --------- cancel
         </h3>
         <ul className="text-xl mt-5 text-blue-500 max-sm:text-lg">
           <li className="hover:text-blue-600 cursor-pointer">
