@@ -26,7 +26,7 @@ const CheckOut = () => {
         form.append('userId', '4ec1d595ae764243');
         form.append('apiKey', '57ce86548429');
         form.append('sum', total * 0.9);
-        form.append('successUrl', 'https://mysite.co.il/thank.html?test=1');
+        form.append('successUrl', 'https://siwarafashion.com/thank-you');
         form.append('cancelUrl', 'https://mysite.co.il');
         form.append('description', 'רכישת בגדים אונליין');
         form.append('pageField[fullName]', firstName + " " + lastName);

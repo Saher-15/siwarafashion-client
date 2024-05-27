@@ -32,10 +32,10 @@ export const shopLoader = async ({ request }) => {
   function buildUrl(category, sort_by, max_price, is_in_stock) {
     let string;
     let updatedSortBy = sort_by; // Create a new variable to store the updated sort_by value
-    if (sort_by === 'high to low') {
+    if (sort_by === 'price : high to low') {
       updatedSortBy = 'desc'; // Update the local variable
     }
-    else if (sort_by === 'low to high') {
+    else if (sort_by === 'price : low to high') {
       updatedSortBy = 'asc'; // Update the local variable
     }
     else if (sort_by === 'none') {
