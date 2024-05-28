@@ -49,10 +49,18 @@ const Footer = () => {
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
-          <FaInstagram className="text-6xl max-sm:text-4xl text-accent-content" onClick={handleClickInsta} />
-          <TbBrandGoogleMaps className="text-6xl max-sm:text-4xl text-accent-content" onClick={handleClickMap} />
+          <FaInstagram
+            className="text-6xl max-sm:text-4xl text-accent-content cursor-pointer hover:text-blue-500"
+            onClick={handleClickInsta}
+          />
+          <TbBrandGoogleMaps
+            className="text-6xl max-sm:text-4xl text-accent-content cursor-pointer hover:text-red-500"
+            onClick={handleClickMap}
+          />
         </div>
       </nav>
+
+
       <aside>
         <p className="text-2xl max-sm:text-sm text-accent-content">
           Copyright © 2024 - All right reserved by SiwaraFashion
