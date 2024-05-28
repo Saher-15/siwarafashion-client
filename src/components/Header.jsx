@@ -80,11 +80,11 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex-none">
-          <button
+        <button
             className="text-accent-content btn btn-ghost btn-circle text-xl"
             onClick={() => dispatch(changeMode())}
           >
-            {darkMode ? <FaMoon /> : <FaSun />}
+            {darkMode ? <FaSun /> : <FaMoon />}
           </button>
           {isLoggedIn && (
             <Link
