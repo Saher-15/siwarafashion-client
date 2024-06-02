@@ -18,40 +18,16 @@ const ThankYou = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  // const firstName = searchParams.get('firstName');
-  // const lastName = searchParams.get('lastName');
-  // const email = searchParams.get('email');
-  // const phone = searchParams.get('phoneNumber');
-  // const city = searchParams.get('city');
-  // const street = searchParams.get('street');
-
-
-
-
-
-
-
-
-  
+  const city = searchParams.get('city');
+  const street = searchParams.get('street');
 
 
   const createNewOrder = async () => {
     try {
-      const userData = localStorage.getItem("user_Data");
-      //   const requestBody = {
-      //     firstName,
-      //     lastName,
-      //     phone,
-      //     email,
-      //     street,
-      //     city
-      // };
 
-
-
-
-      
       const response = await axios.post(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/order/new_order/${localStorage.getItem("id")}`, {
+        street: street,
+        city: city,
         shippingCost: shipping,
         subtotal: total * 0.9,
         cartItems: cartItems,
