@@ -33,7 +33,7 @@ const CheckOut = () => {
             fullName: formData.firstName + " " + formData.lastName,
             phone: formData.phoneNumber,
             email: formData.email,
-            sum: 1
+            sum: total + shipping
         });
         const paymentWindow = window.open(response.data.data.url);
         setWindow_(paymentWindow);
