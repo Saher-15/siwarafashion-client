@@ -9,10 +9,9 @@ import { FaCartShopping } from "react-icons/fa6";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../features/cart/cartSlice";
+import { addToCart, removeItem } from "../features/cart/cartSlice";
 import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
 
 export const singleProductLoader = async ({ params }) => {
   const { id } = params;
@@ -25,7 +24,7 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const { productData } = useLoaderData();
-  const [size, setSize] = useState(productData.availableSizes[0]);
+  const [size, setSize] = useState("");
 
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -39,7 +38,6 @@ const SingleProduct = () => {
         `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/get_wishlist/${localStorage.getItem("id")}`
       );
       const data = getResponse.data;
-      console.log(getResponse);
 
       // Check if the product is in the wishlist
       const isInWishlist = data.findIndex((item) => item.id === productData?._id) !== -1;
@@ -62,7 +60,6 @@ const SingleProduct = () => {
     isInWishList: false
   });
 
-
   useEffect(() => {
     setProduct((prevProduct) => ({
       ...prevProduct,
@@ -70,13 +67,11 @@ const SingleProduct = () => {
     }));
   }, [size]);
 
-
-
   const addToWishlistHandler = async () => {
     try {
       // If product is not in wishlist, add it
       if (!product.isInWishList) {
-        const response = await axios.patch(
+        await axios.patch(
           `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/add_to_wishlist/${localStorage.getItem("id")}`,
           product
         );
@@ -95,7 +90,7 @@ const SingleProduct = () => {
     try {
       // If product is in wishlist, remove it
       if (product.isInWishList) {
-        const response = await axios.delete(
+        await axios.delete(
           `https://siwarafashion-server-59dda37c29fa.herokuapp.com/user/remove_item_from_wishlist/${localStorage.getItem("id")}/${product.id}`,
         );
         toast.success("Product removed from the wishlist!");
@@ -112,12 +107,17 @@ const SingleProduct = () => {
   const isInCart = cartItems.some((item) => item.id === product.id);
 
   const handleButtonClick = () => {
+
     if (loginState) {
       if (isInCart) {
         dispatch(removeItem(product.id));
-      } else {
-        product.price *= product.discount;
-        dispatch(addToCart(product));
+      }
+      else if (!size || size === "Pick your size") {
+        toast.error("Please select a valid size before adding to the cart");
+      }
+      else {
+        const productWithDiscount = { ...product, price: product.price * product.discount };
+        dispatch(addToCart(productWithDiscount));
       }
     } else {
       toast.error("You must be logged in to add products to the cart");
@@ -165,8 +165,7 @@ const SingleProduct = () => {
           </div>
           <div className="text-2xl">
             <SelectSize
-
-              sizeList={productData?.availableSizes}
+              sizeList={["Pick your size", ...productData?.availableSizes]}
               size={size}
               setSize={setSize}
             />
@@ -184,8 +183,6 @@ const SingleProduct = () => {
                 isInCart ? 'Remove from cart' : 'Add to cart'
               )}
             </button>
-
-
 
             {product?.isInWishList ? (
               <button
