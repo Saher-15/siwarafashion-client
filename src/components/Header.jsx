@@ -84,7 +84,7 @@ const Header = () => {
             className="text-accent-content btn btn-ghost btn-circle text-xl"
             onClick={() => dispatch(changeMode())}
           >
-            {darkMode ? <FaSun /> : <FaMoon />}
+            {darkMode ? <FaMoon /> : <FaSun />}
           </button>
           {isLoggedIn && (
             <Link
