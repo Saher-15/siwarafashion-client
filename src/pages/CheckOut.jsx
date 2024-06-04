@@ -81,17 +81,16 @@ const CheckOut = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { firstName, lastName, email, confirmEmail, phoneNumber, city, street } = formData;
-        if (!firstName || !lastName || !email || !confirmEmail || !phoneNumber || !city || !street) {
-            toast.error("Please fill in all fields");
-            return;
-        }
-        if (formData.email !== formData.confirmEmail) {
-            setErrors({ confirmEmail: 'Emails do not match' });
-            toast.error("Emails do not match");
-        } else {
-            setErrors({});
-        }
+        // const { firstName, lastName, email, confirmEmail, phoneNumber, city, street } = formData;
+        // if (!firstName || !lastName || !email || !confirmEmail || !phoneNumber || !city || !street) {
+        //     toast.error("Please fill in all fields");
+        //     return;
+        // }
+        // if (formData.email !== formData.confirmEmail) {
+        //     toast.error("Emails do not match");
+        // } else {
+        //     setErrors({});
+        // }
     };
 
     return (
@@ -244,16 +243,16 @@ const CheckOut = () => {
                     <div className="mt-10">
                         <button
                             type="submit"
-                            className={`block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${(!formData.firstName || !formData.lastName || !formData.email || !formData.confirmEmail || !formData.phoneNumber || !formData.city || !formData.street || formData.email!==formData.confirmEmail) ? 'opacity-50 cursor-not-allowed bg-red-600 hover:bg-red-500' : ''}`}
+                            className={`block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${(!formData.firstName || !formData.lastName || !formData.email || !formData.confirmEmail || !formData.phoneNumber || !formData.city || !formData.street || formData.email !== formData.confirmEmail) ? 'opacity-50 cursor-not-allowed bg-red-600 hover:bg-red-500' : ''}`}
                             onClick={createPaymentGrowApi}
-                            disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.confirmEmail || !formData.phoneNumber || !formData.city || !formData.street}
+                            disabled={!formData.firstName || !formData.lastName || !formData.email || !formData.confirmEmail || !formData.phoneNumber || !formData.city || !formData.street || formData.email !== formData.confirmEmail}
 
                         >
 
                             {!formData.firstName || !formData.lastName || !formData.email || !formData.confirmEmail || !formData.phoneNumber || !formData.city || !formData.street ? (
                                 'Please fill in all fields'
                             ) : (
-                                formData.email!==formData.confirmEmail ? 'Emails do not match' : 'Complete Purchase'
+                                formData.email !== formData.confirmEmail ? 'Emails do not match' : 'Complete Purchase'
 
                             )}
                         </button>
