@@ -22,10 +22,11 @@ const authSlice = createSlice({
     },
     changeMode: (state) => {
       state.darkMode = !state.darkMode;
-      // Update data-theme attribute based on the mode
-      document.querySelector('html').setAttribute('data-theme', state.darkMode ? "dark" : "winter");
-      // Update local storage with the new mode
-      localStorage.setItem('mode', state.darkMode ? 'dark' : 'winter');
+      if (state.darkMode) {
+        document.querySelector('html').setAttribute('data-theme', "dark");
+      } else {
+        document.querySelector('html').setAttribute('data-theme', "winter");
+      }
     }
   },
 });
