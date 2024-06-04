@@ -23,7 +23,7 @@ const WishItem = ({ item, counter, removeFromWishlist }) => {
     <tr onClick={handleRowClick} style={{ cursor: 'pointer' }}>
       <td>{counter + 1}</td>
       <td className="text-accent-content">{item.name}</td>
-      y      <td className="text-accent-content">
+      <td className="text-accent-content">
         <img
           src={item.imageUrl}
           alt={item.name}
