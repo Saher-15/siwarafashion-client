@@ -50,7 +50,7 @@ const CheckOut = () => {
 
         try {
             const response = await axios.get(`https://siwarafashion-server-59dda37c29fa.herokuapp.com/payment/status`, {
-                params: {
+                params:{
                     processId: proId,
                     processToken: proTok
                 }
