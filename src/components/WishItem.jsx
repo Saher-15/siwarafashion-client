@@ -1,30 +1,39 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaHeartCrack } from "react-icons/fa6";
-import { toast } from "react-toastify";
-
+import { toast } from 'react-toastify';
 const WishItem = ({ item, counter, removeFromWishlist }) => {
-  const removeFromWishlistHandler = async () => {
+  const navigate = useNavigate();
+
+  const handleRowClick = () => {
+    navigate(`/shop/product/${item.id}`);
+  };
+
+  const handleRemoveClick = async (event) => {
+    event.stopPropagation(); // Prevent the row click event from triggering
     try {
       await removeFromWishlist(item);
       toast.success("Product removed from the wishlist!");
-    } catch (error) {
-      console.error("Error removing product from wishlist:", error);
-      toast.error("Failed to remove product from the wishlist");
+    } catch {
+      toast.error("Failed to remove product from the wishlist!");
     }
   };
 
   return (
-    <tr className="hover cursor-pointer">
-      <th className="text-accent-content">{counter + 1}</th>
+    <tr onClick={handleRowClick} style={{ cursor: 'pointer' }}>
+      <td>{counter + 1}</td>
       <td className="text-accent-content">{item.name}</td>
-      <td className="text-accent-content">
-        <img src={item.imageUrl} alt="Image description" width="50" height="50" />
+      y      <td className="text-accent-content">
+        <img
+          src={item.imageUrl}
+          alt={item.name}
+          className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
+        />
       </td>
-
-      <td>
-        <button className="btn btn-xs btn-error text-sm" onClick={removeFromWishlistHandler}>
+      <td className="text-accent-content">
+        <button className="btn btn-xs btn-error text-sm" onClick={handleRemoveClick}>
           <FaHeartCrack />
-          remove from the wishlist
+          Remove
         </button>
       </td>
     </tr>
