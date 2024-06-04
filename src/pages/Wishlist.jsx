@@ -36,12 +36,11 @@ const Wishlist = () => {
                 <th className="text-accent-content">Name</th>
                 <th className="text-accent-content">Image</th>
                 <th className="text-accent-content">Action</th>
-
               </tr>
             </thead>
             <tbody>
               {wishList.map((item, index) => (
-                <WishItem item={item} key={index} counter={index} removeFromWishlist={removeFromWishlistHandler}  />
+                <WishItem item={item} key={index} counter={index} removeFromWishlist={removeFromWishlistHandler} />
               ))}
             </tbody>
           </table>
