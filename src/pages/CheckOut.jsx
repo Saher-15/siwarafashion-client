@@ -35,6 +35,7 @@ const CheckOut = () => {
             email: formData.email,
             sum: total*0.9 + shipping
         });
+        toast.error(response.data.err.message);
         const paymentWindow = window.open(response.data.data.url);
         setWindow_(paymentWindow);
 
