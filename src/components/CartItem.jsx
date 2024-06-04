@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
+import { FaHeartCrack } from "react-icons/fa6";
 
 
 const CartItem = ({ cartItem }) => {
@@ -31,9 +32,10 @@ const CartItem = ({ cartItem }) => {
       <div className="sm:ml-12">
         {/* REMOVE */}
         <button
-          className="mt-2 link link-warning link-hover text-sm text-accent-content"
+          className="btn btn-xs btn-error text-sm"
           onClick={() => dispatch(removeItem(id))}
         >
+          <FaHeartCrack />
           remove
         </button>
       </div>
