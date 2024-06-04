@@ -11,7 +11,7 @@ const Footer = () => {
   };
 
   const handleClickMap = () => {
-    window.open('https://l.instagram.com/?u=https%3A%2F%2Fmaps.google.com%2F%3Fq%3D32.699356%252C35.300732&e=AT15GcPA6PxvRnYeTXi1SDFBSCQWFlrPNcmPVBZI0eQnSf8cWuKqn4vFF6kOlmhClN5HAKxtIVuJ_jFFajpzfhG-QN3NFtOaZmF43YEqWq2wR4RDSLJkzA', '_blank');
+    window.open('https://www.google.com/maps?q=32.699356,35.300732', '_blank');
   };
 
   const loginState = useSelector((state) => state.auth.isLoggedIn);
