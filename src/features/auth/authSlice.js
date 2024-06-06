@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const initialState = {
   userId: localStorage.getItem('id') || false,
   isLoggedIn: localStorage.getItem('id') ? true : false,
-  darkMode: localStorage.getItem('mode') === 'dark' ? true : false // Check local storage for the initial mode
+  darkMode: true
 };
 
 const authSlice = createSlice({
