@@ -62,22 +62,22 @@ const Cart = () => {
               <div className="mb-4">
                 <input
                   type="radio"
-                  id="jerusalem"
-                  name="deliveryOption"
-                  value="jerusalem"
-                  onChange={handleDeliveryOptionChange}
-                />
-                <label htmlFor="jerusalem" className="ml-2">Shipping to Jerusalem +50</label>
-              </div>
-              <div className="mb-4">
-                <input
-                  type="radio"
                   id="other_area"
                   name="deliveryOption"
                   value="other_area"
                   onChange={handleDeliveryOptionChange}
                 />
-                <label htmlFor="other_area" className="ml-2">Shipping to other area +35</label>
+                <label htmlFor="other_area" className="ml-2">Shipping to all the country areas +35</label>
+              </div>
+              <div className="mb-4">
+                <input
+                  type="radio"
+                  id="jerusalem"
+                  name="deliveryOption"
+                  value="jerusalem"
+                  onChange={handleDeliveryOptionChange}
+                />
+                <label htmlFor="jerusalem" className="ml-2">Shipping to Jerusalem and west bank +50</label>
               </div>
             </div>
           </div>
