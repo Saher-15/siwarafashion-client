@@ -92,7 +92,7 @@ const Login = () => {
               className="btn btn-neutral text-white"
               onClick={() => window.scrollTo(0, 0)}
             >
-              Don't have an account? Please register.
+              sign up
             </Link>
           </div>
         </div>
