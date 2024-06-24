@@ -19,7 +19,7 @@ const Cart = () => {
     if (selectedOption === 'pickup') {
       dispatch(setShipping(0));
     } else if (selectedOption === 'other_area') {
-      dispatch(setShipping(35));
+      dispatch(setShipping(40));
     } else {
       dispatch(setShipping(50));
     }
@@ -67,7 +67,7 @@ const Cart = () => {
                   value="other_area"
                   onChange={handleDeliveryOptionChange}
                 />
-                <label htmlFor="other_area" className="ml-2">Shipping to all the country areas +35</label>
+                <label htmlFor="other_area" className="ml-2">Shipping to all the country areas +40</label>
               </div>
               <div className="mb-4">
                 <input

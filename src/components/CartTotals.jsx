@@ -15,7 +15,7 @@ const CartTotals = () => {
     if (selectedOption === 'pickUpFromStore') {
       dispatch(setShipping(0));
     } else if (selectedOption === 'nazareth') {
-      dispatch(setShipping(35));
+      dispatch(setShipping(40));
     }
     else dispatch(setShipping(50));;
   };
