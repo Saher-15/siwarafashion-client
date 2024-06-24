@@ -157,7 +157,7 @@ const SingleProduct = () => {
           </p>
           {productData?.discount < 1 && (
             <p className="text-3xl text-error">
-              ₪{productData?.discount * productData?.price}
+              ₪{productData?.discount * productData?.price}.toFixed(2)
             </p>
           )}
           <div className="text-xl max-sm:text-lg text-accent-content">
