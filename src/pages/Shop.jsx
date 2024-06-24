@@ -104,7 +104,7 @@ const Shop = () => {
                         {product.price}
                       </span>
                       &nbsp;
-                      <span className="text-3xl text-error">₪{(product.price * product.discount)}</span>
+                      <span className="text-3xl text-error">₪{(product.price * product.discount).toFixed(2)}</span>
                     </>
                   ) : (
                     `${product.price}`
