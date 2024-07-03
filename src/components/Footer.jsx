@@ -63,7 +63,7 @@ const Footer = () => {
 
       <aside>
         <p className="text-2xl max-sm:text-sm text-accent-content">
-          Copyright © 2024 - All right reserved by SiwaraFashion
+          Copyright © 2024 - All right reserved by SiwaraFashion<br/>Created by Saher Saadi
         </p>
       </aside>
     </footer>
