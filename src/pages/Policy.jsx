@@ -1,45 +1,36 @@
 // src/PrivacyPolicy.js
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import '../styles/PrivatePolicy.css'; // Optional: Create a CSS file for styling
 
 const PrivacyPolicy = () => {
   return (
-    <div className="privacy-policy-container">
-      <h1>Privacy Policy</h1>
-      <p>Last updated: [Date]</p>
+    <div className="container mx-auto px-4 py-8">
 
-      <section>
-        <h2>Introduction</h2>
-        <p>Welcome to [Your Company Name]. We value your privacy and are committed to protecting your personal data.</p>
-      </section>
+      <div className="max-w-3xl mx-auto mt-8">
+        <h2 className="text-4xl font-bold text-center mb-8">Welcome to Siwarafashion</h2>
 
-      <section>
-        <h2>Information We Collect</h2>
-        <p>We collect various types of information in connection with the services we provide, including:</p>
-        <ul>
-          <li>Personal Information (e.g., name, email address)</li>
-          <li>Usage Data (e.g., pages visited, time spent on the site)</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>How We Use Your Information</h2>
-        <p>We use the information we collect for various purposes, including:</p>
-        <ul>
-          <li>To provide and maintain our service</li>
-          <li>To notify you about changes to our service</li>
-          <li>To allow you to participate in interactive features of our service</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us:</p>
-        <ul>
-          <li>By email: contact@example.com</li>
-          <li>By visiting this page on our website: [Your Contact URL]</li>
-        </ul>
-      </section>
+        <p className="text-lg  leading-relaxed">
+          Siwarafashion is not just a store; it's a celebration of individuality, confidence, and style. Founded by a team of passionate fashion enthusiasts, we aim to provide a curated selection of apparel that empowers women to embrace their uniqueness.
+        </p>
+        <br />
+        <p className="text-lg  leading-relaxed">
+          From trendy streetwear to timeless classics, our collection caters to diverse tastes, ensuring there's something for everyone. We prioritize quality, partnering with trusted suppliers and designers to deliver garments crafted with care and attention to detail.
+        </p>
+        <br />
+        <p className="text-lg  leading-relaxed">
+          At Siwarafashion, customer satisfaction is paramount. Our knowledgeable staff is dedicated to assisting you at every step, whether you need styling advice or help finding the perfect outfit.
+        </p>
+        <br />
+        <p className="text-lg  leading-relaxed">
+          We're committed to sustainability and ethical practices, striving to minimize our environmental impact and support fair labor conditions. With every purchase, you're not just buying clothes; you're contributing to positive change.
+        </p>
+        <br />
+        <p className="text-lg  leading-relaxed">
+          Thank you for choosing Siwarafashion. Join us in celebrating your unique style journey!
+        </p>
+      </div>
     </div>
   );
 };
